@@ -21,10 +21,7 @@ export const PopupTabs: FC<Popups> = ({
   });
 
   return (
-    <div
-      className='popup_tabs'
-      style={{ width: `${popupWidth}px` }}
-    >
+    <div className='popup_tabs' style={{ width: `${popupWidth}px` }}>
       {childrenContact}
     </div>
   );
