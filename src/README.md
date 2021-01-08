@@ -2,7 +2,7 @@
 
 ### Inspired by [gpickr](https://github.com/Simonwep/gpickr)
 
-[![NPM](https://img.shields.io/npm/v/react-gcolor-picker.svg)](https://www.npmjs.com/package/react-gcolor-picker) [![License](https://img.shields.io/npm/l/react-gcolor-picker.svg)](https://github.com/undind/react-gcolor-picker/blob/main/LICENSE.md)
+[![NPM](https://img.shields.io/npm/v/react-gcolor-picker.svg)](https://www.npmjs.com/package/react-gcolor-picker) [![License](https://img.shields.io/npm/l/react-gcolor-picker.svg)](https://github.com/undind/react-gcolor-picker/blob/main/LICENSE)
 
 **[Demo](https://undind.github.io/react-gcolor-picker/)**
 
