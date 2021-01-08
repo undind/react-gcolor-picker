@@ -1,0 +1,12 @@
+{
+  "git": {
+    "commitMessage": "Release v${version}",
+    "changelog": "auto-changelog --stdout --commit-limit false"
+  },
+  "github": {
+    "release": true
+  },
+  "hooks": {
+    "after:bump": "auto-changelog -p"
+  }
+}

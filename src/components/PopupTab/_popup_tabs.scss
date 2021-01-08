@@ -1,0 +1,53 @@
+.popup_tabs {
+  position: relative;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  min-width: 267px;
+
+  .popup_tabs-header {
+    width: 100%;
+    height: 49px;
+    box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    background-color: #f6f7f9;
+    display: flex;
+    -webkit-border-radius: 6px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius: 6px;
+    -moz-border-radius-bottomright: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    border-radius: 6px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    overflow: hidden;
+
+    .popup_tabs-header-label {
+      width: 100%;
+      height: 49px;
+      font-size: 14px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 24px;
+      letter-spacing: 0.5px;
+      text-align: center;
+      color: #929fb7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .popup_tabs-header-label-active {
+      background-color: #ffffff;
+      cursor: default;
+      color: #312e55;
+    }
+  }
+
+  .popup_tabs-body {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,54 @@
+import './_picker.scss';
+import React, { useState, useEffect, FC } from 'react';
+
+import ReactGPickerComp from '../src/components/Colorpicker';
+import { IPropsMain } from '../src/components/Colorpicker/types';
+
+const ReactGPicker: FC<IPropsMain> = ({
+  value,
+  gradient,
+  solid,
+  debounceMS,
+  debounce,
+  showAlpha,
+  popupWidth,
+  colorBoardHeight,
+  onChange
+}) => {
+  const [color, setColor] = useState(value);
+  const onChangeColor = (value: string) => setColor(value);
+
+  useEffect(() => {
+    setColor(value);
+  }, [value]);
+
+  return (
+    <div className='wrapper' style={{ background: color }}>
+      <span
+        role='textbox'
+        aria-multiline='true'
+        className='color-text'
+      >
+        {color}
+      </span>
+      <div className='centered'>
+        <ReactGPickerComp
+          value={color}
+          gradient={gradient}
+          solid={solid}
+          debounceMS={debounceMS}
+          debounce={debounce}
+          showAlpha={showAlpha}
+          popupWidth={popupWidth}
+          colorBoardHeight={colorBoardHeight}
+          onChange={(value) => {
+            onChangeColor(value);
+            onChange(value);
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ReactGPicker;
