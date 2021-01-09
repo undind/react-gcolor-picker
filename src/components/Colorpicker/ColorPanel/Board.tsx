@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useRef,
   MutableRefObject,
-  MouseEvent
+  MouseEvent,
+  TouchEvent
 } from 'react';
 
 import { TinyColor } from '../../../utils';
@@ -31,8 +32,8 @@ const Board: FC<TPropsComp> = ({
   const removeTouchListeners = () => {
     setChange(false);
 
-    window.addEventListener('touchmove', onBoardTouchMove);
-    window.addEventListener('touchend', onBoardTouchEnd);
+    window.removeEventListener('touchmove', onBoardTouchMove);
+    window.removeEventListener('touchend', onBoardTouchEnd);
   };
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const Board: FC<TPropsComp> = ({
   }, []);
 
   const onBoardMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
     const buttons = e.buttons;
 
     if (buttons !== 1) return;
@@ -58,7 +60,11 @@ const Board: FC<TPropsComp> = ({
     window.addEventListener('mouseup', onBoardDragEnd);
   };
 
-  const onBoardTouchStart = (e: any) => {
+  const onBoardTouchStart = (e: TouchEvent) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
     if (e.touches.length !== 1) {
       return;
     }
@@ -70,11 +76,15 @@ const Board: FC<TPropsComp> = ({
 
     pointMoveTo({ x, y });
 
-    window.addEventListener('touchmove', onBoardTouchMove);
-    window.addEventListener('touchend', onBoardTouchEnd);
+    window.addEventListener('touchmove', onBoardTouchMove, { passive: false });
+    window.addEventListener('touchend', onBoardTouchEnd, { passive: false });
   };
 
   const onBoardTouchMove = (e: any) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
     const x = e.targetTouches[0].clientX;
     const y = e.targetTouches[0].clientY;
 
@@ -89,6 +99,7 @@ const Board: FC<TPropsComp> = ({
   };
 
   const onBoardDrag = (e: any) => {
+    e.preventDefault();
     const x = e.clientX;
     const y = e.clientY;
 
@@ -99,6 +110,7 @@ const Board: FC<TPropsComp> = ({
   };
 
   const onBoardDragEnd = (e: any) => {
+    e.preventDefault();
     const x = e.clientX;
     const y = e.clientY;
 

@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useRef,
   MutableRefObject,
-  MouseEvent
+  MouseEvent,
+  TouchEvent
 } from 'react';
 
 import Markers from './Markers';
@@ -108,6 +109,11 @@ const GradientPanel: FC<IPropsPanel> = ({
     window.removeEventListener('mouseup', onDragEnd);
   };
 
+  const removeTouchListeners = () => {
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+  };
+
   const onMouseDown = (e: any) => {
     e.preventDefault();
 
@@ -161,6 +167,52 @@ const GradientPanel: FC<IPropsPanel> = ({
     });
 
     removeListeners();
+  };
+
+  const onTouchStart = (e: TouchEvent) => {
+    setInit(false);
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (e.touches.length !== 1) {
+      return;
+    }
+
+    removeTouchListeners();
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+    const shiftKey = false;
+    const ctrlKey = 0;
+
+    pointMoveTo({ x, y, shiftKey, ctrlKey });
+
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: false });
+  };
+
+  const onTouchMove = (e: any) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+    const shiftKey = false;
+    const ctrlKey = 0;
+
+    pointMoveTo({
+      x,
+      y,
+      shiftKey,
+      ctrlKey
+    });
+  };
+
+  const onTouchEnd = () => {
+    removeTouchListeners();
   };
 
   const pointMoveTo = (coords: TCoords) => {
@@ -237,7 +289,10 @@ const GradientPanel: FC<IPropsPanel> = ({
       );
     }
 
-    return () => removeListeners();
+    return () => {
+      removeListeners();
+      removeTouchListeners();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -245,7 +300,8 @@ const GradientPanel: FC<IPropsPanel> = ({
     <div className='gradient-interaction'>
       <div
         className='gradient-result'
-        onMouseDown={(e) => onMouseDown(e)}
+        onMouseDown={onMouseDown}
+        onTouchStart={onTouchStart}
         style={{ background: gradient }}
       >
         <div

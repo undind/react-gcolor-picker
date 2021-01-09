@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useRef,
   MutableRefObject,
-  MouseEvent
+  MouseEvent,
+  TouchEvent
 } from 'react';
 
 import { TinyColor } from '../../../utils';
@@ -23,9 +24,17 @@ const Ribbon: FC<TPropsComp> = ({
     window.removeEventListener('mouseup', onDragEnd);
   };
 
+  const removeTouchListeners = () => {
+    setChange(false);
+
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+  };
+
   useEffect(() => {
     return () => {
       removeListeners();
+      removeTouchListeners();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,6 +77,44 @@ const Ribbon: FC<TPropsComp> = ({
     removeListeners();
   };
 
+  const onTouchStart = (e: TouchEvent) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (e.touches.length !== 1) {
+      return;
+    }
+
+    removeTouchListeners();
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({ x, y });
+
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: false });
+  };
+
+  const onTouchMove = (e: any) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({
+      x,
+      y
+    });
+  };
+
+  const onTouchEnd = () => {
+    removeTouchListeners();
+  };
+
   const getPrefixCls = () => {
     return `${rootPrefixCls}-ribbon`;
   };
@@ -99,7 +146,12 @@ const Ribbon: FC<TPropsComp> = ({
   const per = (hue / 360) * 100;
 
   return (
-    <div className={prefixCls} ref={node} onMouseDown={onMouseDown}>
+    <div
+      className={prefixCls}
+      ref={node}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+    >
       <div className='color-picker-panel-ribbon-bg' />
       <span style={{ left: `${per}%`, backgroundColor: hueColor }} />
       <div className={`${prefixCls}-handler`} />

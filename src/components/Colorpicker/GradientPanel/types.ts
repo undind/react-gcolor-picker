@@ -12,8 +12,8 @@ interface IColor {
 export type TCoords = {
   x: number;
   y: number;
-  shiftKey?: number;
-  ctrlKey?: number;
+  shiftKey?: number | boolean;
+  ctrlKey?: number | boolean;
 };
 
 export interface IPropsPanel {
