@@ -1,4 +1,11 @@
-import React, { useRef, FC, MouseEvent, MutableRefObject } from 'react';
+import React, {
+  FC,
+  useRef,
+  useEffect,
+  MouseEvent,
+  TouchEvent,
+  MutableRefObject
+} from 'react';
 
 import { hexAlphaToRgba, getGradient } from '../../../utils';
 
@@ -53,6 +60,11 @@ const Markers: FC<IPropsMarkers> = ({
     window.removeEventListener('mouseup', onDragEnd);
   };
 
+  const removeTouchListeners = () => {
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+  };
+
   const onMouseDown = (e: MouseEvent) => {
     e.preventDefault();
 
@@ -94,6 +106,46 @@ const Markers: FC<IPropsMarkers> = ({
     removeListeners();
   };
 
+  const onTouchStart = (e: TouchEvent) => {
+    setInit(false);
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (e.touches.length !== 1) {
+      return;
+    }
+
+    removeTouchListeners();
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({ x, y });
+
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: false });
+  };
+
+  const onTouchMove = (e: any) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({
+      x,
+      y
+    });
+  };
+
+  const onTouchEnd = () => {
+    removeTouchListeners();
+  };
+
   const pointMoveTo = (coords: TCoords) => {
     const rect = node && node.current.getBoundingClientRect();
     const width = rect.width;
@@ -104,6 +156,14 @@ const Markers: FC<IPropsMarkers> = ({
     const location = Number(((100 / rect.width) * pos).toFixed(0)) / 100;
     setActiveLoc(location);
   };
+
+  useEffect(() => {
+    return () => {
+      removeListeners();
+      removeTouchListeners();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
@@ -132,6 +192,10 @@ const Markers: FC<IPropsMarkers> = ({
               key={rgba + position + Math.random() * 100}
               className='gradient-marker'
               style={{ left: position + '%', color: rgba }}
+              onTouchStart={(e) => {
+                setActiveIndex(color[2]);
+                onTouchStart(e);
+              }}
               onMouseDown={(e) => {
                 setActiveIndex(color[2]);
                 onMouseDown(e);

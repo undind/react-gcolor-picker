@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useRef,
   MutableRefObject,
-  MouseEvent
+  MouseEvent,
+  TouchEvent
 } from 'react';
 
 import { TPropsCompAlpha, TCoords } from './types';
@@ -26,9 +27,17 @@ const Alpha: FC<TPropsCompAlpha> = ({
     window.removeEventListener('mouseup', onDragEnd);
   };
 
+  const removeTouchListeners = () => {
+    setChange(false);
+
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+  };
+
   useEffect(() => {
     return () => {
       removeListeners();
+      removeTouchListeners();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -70,6 +79,44 @@ const Alpha: FC<TPropsCompAlpha> = ({
     removeListeners();
   };
 
+  const onTouchStart = (e: TouchEvent) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (e.touches.length !== 1) {
+      return;
+    }
+
+    removeTouchListeners();
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({ x, y });
+
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: false });
+  };
+
+  const onTouchMove = (e: any) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    const x = e.targetTouches[0].clientX;
+    const y = e.targetTouches[0].clientY;
+
+    pointMoveTo({
+      x,
+      y
+    });
+  };
+
+  const onTouchEnd = () => {
+    removeTouchListeners();
+  };
+
   const getBackground = () => {
     const { red, green, blue } = color;
     const opacityGradient = `linear-gradient(to right, ${rgbaColor(
@@ -109,7 +156,12 @@ const Alpha: FC<TPropsCompAlpha> = ({
   const prefixCls = getPrefixCls();
 
   return (
-    <div className={prefixCls} ref={node} onMouseDown={onMouseDown}>
+    <div
+      className={prefixCls}
+      ref={node}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+    >
       <div
         className={`${prefixCls}-bg`}
         style={{ background: getBackground() }}

@@ -695,6 +695,10 @@
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         transition: opacity 0.15s;
         cursor: grab;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
         &::before {
           position: absolute;
