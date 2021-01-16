@@ -3,10 +3,17 @@
     "outDir": "dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom", "dom.iterable", "esnext", "es2016", "es2017"],
+    "lib": [
+      "es6",
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2016",
+      "es2017"
+    ],
     "sourceMap": true,
     "allowJs": false,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "declaration": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
@@ -27,6 +34,14 @@
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "example",
+    "rollup.config.js"
+  ]
 }
