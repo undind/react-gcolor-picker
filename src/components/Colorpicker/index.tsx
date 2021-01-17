@@ -17,6 +17,7 @@ import { IPropsMain } from './types';
 
 const ColorPicker: FC<IPropsMain> = ({
   value = '#ffffff',
+  format = 'rgb',
   gradient = false,
   solid = true,
   debounceMS = 300,
@@ -52,6 +53,7 @@ const ColorPicker: FC<IPropsMain> = ({
             <Solid
               onChange={onChangeSolid}
               value={value}
+              format={format}
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
@@ -62,6 +64,7 @@ const ColorPicker: FC<IPropsMain> = ({
             <Gradinet
               onChange={onChangeGradient}
               value={value}
+              format={format}
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
@@ -82,6 +85,7 @@ const ColorPicker: FC<IPropsMain> = ({
               <Solid
                 onChange={onChangeSolid}
                 value={value}
+                format={format}
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}
@@ -94,6 +98,7 @@ const ColorPicker: FC<IPropsMain> = ({
               <Gradinet
                 onChange={onChangeGradient}
                 value={value}
+                format={format}
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}

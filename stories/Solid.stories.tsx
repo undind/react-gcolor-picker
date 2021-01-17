@@ -14,6 +14,7 @@ const Template: Story<IPropsMain> = (args) => <ReactGPicker {...args} />;
 export const Solid = Template.bind({});
 Solid.args = {
   value: '#fff',
+  format: 'rgb',
   solid: true,
   gradient: false,
   debounceMS: 300,

@@ -3,6 +3,7 @@ import { ReactText } from 'react';
 export interface IPropsComp {
   value: string;
   onChange: (value: string) => void;
+  format?: 'rgb' | 'hsl' | 'hex';
   debounceMS?: number;
   debounce?: boolean;
   showAlpha?: boolean;

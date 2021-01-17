@@ -3,13 +3,19 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import ColorPickerPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
 
-import { getHexAlpha, hexAlphaToRgba, useDebounce } from '../../../utils';
+import {
+  getHexAlpha,
+  hexAlphaToRgba,
+  useDebounce,
+  checkFormat
+} from '../../../utils';
 
 import { IPropsComp, TPropsChange } from '../types';
 
 const ColorPickerSolid: FC<IPropsComp> = ({
   value = '#ffffff',
   onChange = () => ({}),
+  format = 'rgb',
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
@@ -27,10 +33,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
   useEffect(() => {
     if (debounce && debounceColor && init === false) {
       const rgba = hexAlphaToRgba(color);
-      onChange && onChange(rgba);
-    } else if (init === false) {
-      const rgba = hexAlphaToRgba(color);
-      onChange && onChange(rgba);
+      onChange(checkFormat(rgba, format, showAlpha, debounceColor.alpha));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceColor]);
@@ -55,6 +58,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
       <InputRgba
         hex={color.hex}
         alpha={color.alpha}
+        format={format}
         showAlpha={showAlpha}
         onChange={setColor}
         onSubmitChange={onChange}

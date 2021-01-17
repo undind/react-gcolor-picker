@@ -14,6 +14,7 @@ const Template: Story<IPropsMain> = (args) => <ReactGPicker {...args} />;
 export const Both = Template.bind({});
 Both.args = {
   value: 'hsla(0, 50%, 50%, 0.5)',
+  format: 'hsl',
   solid: true,
   gradient: true,
   debounceMS: 300,
