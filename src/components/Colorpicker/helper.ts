@@ -10,7 +10,11 @@ export const getIndexActiveTag = (value: string) => {
       tab = 0;
       return tab;
     }
-    if (validValue && !value.trim().startsWith('radial-gradient')) {
+    if (
+      validValue &&
+      !value.trim().startsWith('radial-gradient') &&
+      !value.trim().startsWith('linear-gradient')
+    ) {
       tab = 0;
       return tab;
     }

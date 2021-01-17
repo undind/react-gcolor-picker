@@ -1,5 +1,5 @@
 import './_colorpicker.scss';
-import React, { Fragment, useState, FC } from 'react';
+import React, { Fragment, useState, FC, useEffect } from 'react';
 
 import Gradinet from './Gradient';
 import Solid from './Solid';
@@ -36,6 +36,11 @@ const ColorPicker: FC<IPropsMain> = ({
   const onChangeGradient = (value: string) => {
     onChange(value);
   };
+
+  useEffect(() => {
+    console.log(value)
+    setActiveTab(getIndexActiveTag(value))
+  }, [value])
 
   if (solid && gradient) {
     return (

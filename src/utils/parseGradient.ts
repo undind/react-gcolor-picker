@@ -28,7 +28,7 @@ const LINEAR_POS = [
 
 export default (str: string) => {
   const tinyColor = tinycolor(str);
-
+  console.log(tinyColor);
   const defaultStops = {
     stops: [
       ['rgba(0, 0, 0, 1)', 0, 0],
@@ -43,7 +43,11 @@ export default (str: string) => {
     return defaultStops;
   }
 
-  if (tinyColor.isValid() && !str.trim().startsWith('radial-gradient')) {
+  if (
+    tinyColor.isValid() &&
+    !str.trim().startsWith('radial-gradient') &&
+    !str.trim().startsWith('linear-gradient')
+  ) {
     const rgbaStr = tinyColor.toRgbString();
 
     if (rgbaStr) {

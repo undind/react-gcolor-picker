@@ -8,7 +8,11 @@ export default (value: string) => {
   const tinyColor = tinycolor(value);
 
   if (value) {
-    if (tinyColor.isValid() && !value.trim().startsWith('radial-gradient')) {
+    if (
+      tinyColor.isValid() &&
+      !value.trim().startsWith('radial-gradient') &&
+      !value.trim().startsWith('linear-gradient')
+    ) {
       defaultObject.hex = tinyColor.toHexString();
       defaultObject.alpha = Math.round(tinyColor.getAlpha() * 100);
     } else {
