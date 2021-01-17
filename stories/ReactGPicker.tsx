@@ -6,6 +6,7 @@ import { IPropsMain } from '../src/components/Colorpicker/types';
 
 const ReactGPicker: FC<IPropsMain> = ({
   value,
+  format,
   gradient,
   solid,
   debounceMS,
@@ -35,6 +36,7 @@ const ReactGPicker: FC<IPropsMain> = ({
         <ReactGPickerComp
           value={color}
           gradient={gradient}
+          format={format}
           solid={solid}
           debounceMS={debounceMS}
           debounce={debounce}

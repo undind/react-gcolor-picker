@@ -18,7 +18,9 @@ const Markers: FC<IPropsMarkers> = ({
   setActiveColor,
   setInit,
   setActiveIndex,
-  setActiveLoc
+  setActiveLoc,
+  format = 'rgb',
+  showAlpha = true
 }) => {
   const node = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -40,7 +42,7 @@ const Markers: FC<IPropsMarkers> = ({
 
       setColor({
         ...color,
-        gradient: `${getGradient(type, newStops, modifier)}`,
+        gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
         stops: newStops
       });
 

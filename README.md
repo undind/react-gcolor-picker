@@ -36,17 +36,34 @@ export default App;
 
 ## Props
 
-| Attribute        |    Type    |  Default  | Description                                                   |
-| :--------------- | :--------: | :-------: | :------------------------------------------------------------ |
-| value            |  `string`  | `#ffffff` | Default color value. Accepted: rgba/rgb, hsla, named colors   |
-| gradient         |   `bool`   |  `false`  | Show gradient color panel                                     |
-| solid            |   `bool`   |  `true`   | Show solid color panel                                        |
-| debounceMS       |  `number`  |   `300`   | Debounce ms value                                             |
-| debounce         |   `bool`   |  `true`   | Debouce off/on                                                |
-| showAlpha        |   `bool`   |  `true`   | Show/hide alpha input and range                               |
-| popupWidth       |  `number`  |   `267`   | Popup width                                                   |
-| colorBoardHeight |  `number`  |   `120`   | Board color height                                            |
-| onChange         | `function` |  `null`   | Default onChange function returns string value on rgba format |
+| Attribute        |    Type    |  Default  | Description                                                        |
+| :--------------- | :--------: | :-------: | :----------------------------------------------------------------- |
+| value            |  `string`  | `#ffffff` | Default color value. Accepted: rgba/rgb, hsla/hsl, named colors    |
+| format           |  `string`  |   `rgb`   | Return value format. Acepted: 'rgb', 'hex', 'hsl'                  |
+| gradient         |   `bool`   |  `false`  | Show gradient color panel                                          |
+| solid            |   `bool`   |  `true`   | Show solid color panel                                             |
+| debounceMS       |  `number`  |   `300`   | Debounce ms value                                                  |
+| debounce         |   `bool`   |  `true`   | Debouce off/on                                                     |
+| showAlpha        |   `bool`   |  `true`   | Show/hide alpha input and range                                    |
+| popupWidth       |  `number`  |   `267`   | Popup width                                                        |
+| colorBoardHeight |  `number`  |   `120`   | Board color height                                                 |
+| onChange         | `function` |  `null`   | Default onChange function returns string value in the given format |
+
+
+When passing a value for a gradient, you must specify the position of all colors. Otherwise the component will throw an exception.
+For example:
+
+### Wrong
+
+```
+linear-gradient(180deg, #000000,#ff0000)
+```
+
+### Correct
+
+```
+linear-gradient(180deg, #000000 0%,#ff0000 100%)
+```
 
 ## License
 

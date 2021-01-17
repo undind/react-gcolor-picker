@@ -22,6 +22,8 @@ export interface IPropsPanel {
   activeColor: IActiveColor;
   setActiveColor: Dispatch<SetStateAction<IActiveColor>>;
   setInit: Dispatch<SetStateAction<boolean>>;
+  showAlpha?: boolean;
+  format?: 'rgb' | 'hsl' | 'hex';
 }
 
 export interface IPropsMarkers extends IPropsPanel {

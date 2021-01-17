@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import './_input_rgba.scss';
 
-import { hexAlphaToRgba } from '../../utils';
+import { hexAlphaToRgba, checkFormat } from '../../utils';
 import { getAlphaValue, inputsData, handlePressEnter } from './helpers';
 
 interface IChange {
@@ -12,6 +12,7 @@ interface IChange {
 type TProps = {
   hex: string;
   alpha: number;
+  format?: 'rgb' | 'hsl' | 'hex';
   showAlpha?: boolean;
   onChange: ({ hex, alpha }: IChange) => void;
   onSubmitChange?: (rgba: string) => void;
@@ -20,7 +21,8 @@ type TProps = {
 const InputRgba: FC<TProps> = ({
   hex,
   alpha,
-  showAlpha,
+  format = 'rgb',
+  showAlpha = true,
   onChange,
   onSubmitChange
 }) => {
@@ -57,7 +59,7 @@ const InputRgba: FC<TProps> = ({
         alpha: Number(color.alpha)
       });
       if (onSubmitChange) {
-        onSubmitChange(rgba);
+        onSubmitChange(checkFormat(rgba, format, showAlpha, color.alpha));
       }
     } else {
       setColor({

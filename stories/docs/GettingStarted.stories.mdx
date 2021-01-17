@@ -26,51 +26,57 @@ import ReactGPicker from &#39;react-gcolor-picker&#39;;</code></pre>
 <td align="left">value</td>
 <td align="center"><code>string</code></td>
 <td align="center"><code>#ffffff</code></td>
-<td align="left">Default color value. Accepted: rgba/rgb, hsla, named colors</td>
+<td align="left">Default color value. Accepted: rgba/rgb, hsla/hsl, named colors</td>
 </tr>
 <tr className="even">
+<td align="left">format</td>
+<td align="center"><code>string</code></td>
+<td align="center"><code>rgb</code></td>
+<td align="left">Return value format. Acepted: 'rgb', 'hex', 'hsl'</td>
+</tr>
+<tr className="odd">
 <td align="left">gradient</td>
 <td align="center"><code>bool</code></td>
 <td align="center"><code>false</code></td>
 <td align="left">Show gradient color panel</td>
 </tr>
-<tr className="odd">
+<tr className="even">
 <td align="left">solid</td>
 <td align="center"><code>bool</code></td>
 <td align="center"><code>true</code></td>
 <td align="left">Show solid color panel</td>
 </tr>
-<tr className="even">
+<tr className="odd">
 <td align="left">debounceMS</td>
 <td align="center"><code>number</code></td>
 <td align="center"><code>300</code></td>
 <td align="left">Debounce ms value</td>
 </tr>
-<tr className="odd">
+<tr className="even">
 <td align="left">debounce</td>
 <td align="center"><code>bool</code></td>
 <td align="center"><code>true</code></td>
 <td align="left">Debouce off/on</td>
 </tr>
-<tr className="even">
+<tr className="odd">
 <td align="left">showAlpha</td>
 <td align="center"><code>bool</code></td>
 <td align="center"><code>true</code></td>
 <td align="left">Show/hide alpha input and range</td>
 </tr>
-<tr className="odd">
+<tr className="even">
 <td align="left">popupWidth</td>
 <td align="center"><code>number</code></td>
 <td align="center"><code>267</code></td>
 <td align="left">Popup width</td>
 </tr>
-<tr className="even">
+<tr className="odd">
 <td align="left">colorBoardHeight</td>
 <td align="center"><code>number</code></td>
 <td align="center"><code>120</code></td>
 <td align="left">Board color height</td>
 </tr>
-<tr className="odd">
+<tr className="even">
 <td align="left">onChange</td>
 <td align="center"><code>function</code></td>
 <td align="center"><code>null</code></td>
@@ -78,6 +84,13 @@ import ReactGPicker from &#39;react-gcolor-picker&#39;;</code></pre>
 </tr>
 </tbody>
 </table>
+<p>When passing a value for a gradient, you must specify the position of all colors. Otherwise the component will throw an exception.
+For example:</p>
+<h3 id="wrong">Wrong</h3>
+<pre><code><span class="hljs-function"><span class="hljs-title">linear-gradient</span><span class="hljs-params">(<span class="hljs-number">180deg</span>, <span class="hljs-number">#000000</span>,<span class="hljs-number">#ff0000</span>)</span></span>
+</code></pre><h3 id="correct">Correct</h3>
+<pre><code><span class="hljs-function"><span class="hljs-title">linear-gradient</span><span class="hljs-params">(<span class="hljs-number">180deg</span>, <span class="hljs-number">#000000</span> <span class="hljs-number">0%</span>,<span class="hljs-number">#ff0000</span> <span class="hljs-number">100%</span>)</span></span>
+</code></pre>
 <h2 id="license">License</h2>
 <p>MIT © <a href="https://github.com/undind">undind</a></p>
 

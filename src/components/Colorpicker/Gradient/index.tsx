@@ -18,6 +18,7 @@ import { IPropsComp, TPropsChange, IActiveColor } from '../types';
 const Gradient: FC<IPropsComp> = ({
   value = '#ffffff',
   onChange = () => ({}),
+  format = 'rgb',
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
@@ -72,7 +73,7 @@ const Gradient: FC<IPropsComp> = ({
     });
     setColor({
       ...color,
-      gradient: `${getGradient(type, newStops, modifier)}`,
+      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
       stops: newStops
     });
   };
@@ -111,6 +112,8 @@ const Gradient: FC<IPropsComp> = ({
         activeColor={activeColor}
         setActiveColor={setActiveColor}
         setInit={setInit}
+        format={format}
+        showAlpha={showAlpha}
       />
     </div>
   );

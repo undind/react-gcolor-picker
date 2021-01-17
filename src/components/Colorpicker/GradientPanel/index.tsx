@@ -33,7 +33,9 @@ const GradientPanel: FC<IPropsPanel> = ({
   setColor,
   activeColor,
   setActiveColor,
-  setInit
+  setInit,
+  format = 'rgb',
+  showAlpha = true
 }) => {
   const angleNode = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -54,7 +56,9 @@ const GradientPanel: FC<IPropsPanel> = ({
           gradient: `${getGradient(
             'radial',
             stops,
-            activePos && activePos.css
+            activePos && activePos.css,
+            format,
+            showAlpha
           )}`,
           type: 'radial'
         });
@@ -64,7 +68,7 @@ const GradientPanel: FC<IPropsPanel> = ({
       case 'radial': {
         setColor({
           ...color,
-          gradient: `${getGradient('linear', stops, 180)}`,
+          gradient: `${getGradient('linear', stops, 180, format, showAlpha)}`,
           type: 'linear'
         });
         break;
@@ -100,7 +104,13 @@ const GradientPanel: FC<IPropsPanel> = ({
     setColor({
       ...color,
       modifier: activePos && activePos.css,
-      gradient: `${getGradient('radial', stops, activePos && activePos.css)}`
+      gradient: `${getGradient(
+        'radial',
+        stops,
+        activePos && activePos.css,
+        format,
+        showAlpha
+      )}`
     });
   };
 
@@ -227,7 +237,7 @@ const GradientPanel: FC<IPropsPanel> = ({
     const newAngle = degrees - (degrees % (45 / div));
     setColor({
       ...color,
-      gradient: `${getGradient(type, stops, newAngle)}`,
+      gradient: `${getGradient(type, stops, newAngle, format, showAlpha)}`,
       modifier: newAngle
     });
   };
@@ -257,7 +267,7 @@ const GradientPanel: FC<IPropsPanel> = ({
 
     setColor({
       ...color,
-      gradient: `${getGradient(type, newStops, modifier)}`,
+      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
       stops: newStops
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -269,7 +279,7 @@ const GradientPanel: FC<IPropsPanel> = ({
       setColor({
         ...color,
         modifier: activePos && activePos.css,
-        gradient: `${getGradient('radial', stops, activePos && activePos.css)}`
+        gradient: `${getGradient('radial', stops, activePos && activePos.css, format, showAlpha)}`
       });
 
       setRadialPosition(
@@ -349,6 +359,8 @@ const GradientPanel: FC<IPropsPanel> = ({
         setInit={setInit}
         setActiveIndex={setActiveIndex}
         setActiveLoc={setActiveLoc}
+        format={format}
+        showAlpha={showAlpha}
       />
     </div>
   );
