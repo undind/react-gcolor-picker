@@ -43,7 +43,11 @@ export default (str: string) => {
     return defaultStops;
   }
 
-  if (tinyColor.isValid() && !str.trim().startsWith('radial-gradient')) {
+  if (
+    tinyColor.isValid() &&
+    !str.trim().startsWith('radial-gradient') &&
+    !str.trim().startsWith('linear-gradient')
+  ) {
     const rgbaStr = tinyColor.toRgbString();
 
     if (rgbaStr) {
