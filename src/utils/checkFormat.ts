@@ -8,9 +8,7 @@ export default (
 ) => {
   const tinyColor = tinycolor(color);
   let value: string;
-  let alphaValue = stateColorAlpha
-    ? stateColorAlpha
-    : tinyColor.getAlpha() * 100;
+  const alphaValue = stateColorAlpha || tinyColor.getAlpha() * 100;
 
   switch (format) {
     case 'rgb':

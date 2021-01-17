@@ -279,7 +279,13 @@ const GradientPanel: FC<IPropsPanel> = ({
       setColor({
         ...color,
         modifier: activePos && activePos.css,
-        gradient: `${getGradient('radial', stops, activePos && activePos.css, format, showAlpha)}`
+        gradient: `${getGradient(
+          'radial',
+          stops,
+          activePos && activePos.css,
+          format,
+          showAlpha
+        )}`
       });
 
       setRadialPosition(
