@@ -4,7 +4,10 @@ import ReactGPicker from 'react-gcolor-picker';
 
 function App() {
   const [color, setColor] = useState('#fff');
-  const onChange = (value: string) => setColor(value);
+  const onChange = (value: string) => {
+    console.log(value)
+    setColor(value)
+  };
 
   return (
     <>

@@ -102,4 +102,10 @@ describe('Test Suites Color Picker', () => {
       'popup_tabs-header-label popup_tabs-header-label-active'
     );
   });
+
+  it('Check default colors panel length', () => {
+    const defaulPanel = wrapper.find('.default-color-panel_item');
+
+    expect(defaulPanel.length).toBe(12);
+  });
 });

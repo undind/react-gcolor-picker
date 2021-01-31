@@ -38,8 +38,8 @@ export default App;
 
 | Attribute        |    Type    |  Default  | Description                                                        |
 | :--------------- | :--------: | :-------: | :----------------------------------------------------------------- |
-| value            |  `string`  | `#ffffff` | Default color value. Accepted: rgba/rgb, hsla/hsl, named colors    |
-| format           |  `string`  |   `rgb`   | Return value format. Acepted: 'rgb', 'hex', 'hsl'                  |
+| value            |  `string`  | `#ffffff` | Default color value. Accept: rgba/rgb, hsla/hsl, named colors      |
+| format           |  `string`  |   `rgb`   | Return value format. Accept: 'rgb', 'hex', 'hsl'                   |
 | gradient         |   `bool`   |  `false`  | Show gradient color panel                                          |
 | solid            |   `bool`   |  `true`   | Show solid color panel                                             |
 | debounceMS       |  `number`  |   `300`   | Debounce ms value                                                  |
@@ -48,7 +48,6 @@ export default App;
 | popupWidth       |  `number`  |   `267`   | Popup width                                                        |
 | colorBoardHeight |  `number`  |   `120`   | Board color height                                                 |
 | onChange         | `function` |  `null`   | Default onChange function returns string value in the given format |
-
 
 When passing a value for a gradient, you must specify the position of all colors. Otherwise the component will throw an exception.
 For example:

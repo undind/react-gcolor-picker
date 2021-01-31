@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import ColorPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
 import GradientPanel from '../GradientPanel';
+import DefaultColorsPanel from '../DefaultColorPanel';
 
 import {
   parseGradient,
@@ -22,18 +23,14 @@ const Gradient: FC<IPropsComp> = ({
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
-  colorBoardHeight = 120
+  colorBoardHeight = 120,
+  defaultColors
 }) => {
-  const lastStop = rgbaToArray(
-    parseGradient(value).stops[parseGradient(value).stops.length - 1][0]
-  );
-  const lastStopLoc = parseGradient(value).stops[
-    parseGradient(value).stops.length - 1
-  ][1];
+  const { stops } = parseGradient(value);
+  const lastStop = rgbaToArray(stops[stops.length - 1][0]);
+  const lastStopLoc = stops[stops.length - 1][1];
   const activeStop = rgbaToHex([lastStop[0], lastStop[1], lastStop[2]]);
-  const activeIdx = parseGradient(value).stops[
-    parseGradient(value).stops.length - 1
-  ][2];
+  const activeIdx = stops[stops.length - 1][2];
 
   const [init, setInit] = useState(true);
   const [activeColor, setActiveColor] = useState<IActiveColor>({
@@ -65,7 +62,7 @@ const Gradient: FC<IPropsComp> = ({
 
     const { stops, type, modifier } = color;
     const rgba = hexAlphaToRgba(value);
-    const newStops = stops.map((item) => {
+    const newStops = stops.map((item: any) => {
       if (item[2] === activeColor.index) {
         return [rgba, item[1], item[2]];
       }
@@ -114,6 +111,16 @@ const Gradient: FC<IPropsComp> = ({
         setInit={setInit}
         format={format}
         showAlpha={showAlpha}
+      />
+      <DefaultColorsPanel
+        defaultColors={defaultColors}
+        setColor={setColor}
+        setActiveColor={setActiveColor}
+        setInit={setInit}
+        value={value}
+        showAlpha={showAlpha}
+        format={format}
+        colorType='gradient'
       />
     </div>
   );

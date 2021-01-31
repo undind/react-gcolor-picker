@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction, ReactText } from 'react';
 
 import { IActiveColor } from '../types';
 
-interface IColor {
+export interface IColor {
   gradient: string;
   type: string;
-  modifier: string | number | undefined;
+  modifier: string | number;
   stops: any;
 }
 

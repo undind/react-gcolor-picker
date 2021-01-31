@@ -52,11 +52,11 @@ const GradientPanel: FC<IPropsPanel> = ({
         const activePos = radialsPosition.find((item) => item.active);
         setColor({
           ...color,
-          modifier: activePos && activePos.css,
+          modifier: activePos?.css || modifier,
           gradient: `${getGradient(
             'radial',
             stops,
-            activePos && activePos.css,
+            activePos?.css || modifier,
             format,
             showAlpha
           )}`,
@@ -103,11 +103,11 @@ const GradientPanel: FC<IPropsPanel> = ({
     const activePos = newRadialsPosition.find((item) => item.active);
     setColor({
       ...color,
-      modifier: activePos && activePos.css,
+      modifier: activePos?.css || modifier,
       gradient: `${getGradient(
         'radial',
         stops,
-        activePos && activePos.css,
+        activePos?.css || modifier,
         format,
         showAlpha
       )}`
@@ -274,15 +274,23 @@ const GradientPanel: FC<IPropsPanel> = ({
   }, [activeIndex, activeLoc]);
 
   useEffect(() => {
+    return () => {
+      removeListeners();
+      removeTouchListeners();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (type === 'radial') {
       const activePos = radialsPosition.find((item) => item.css === modifier);
       setColor({
         ...color,
-        modifier: activePos && activePos.css,
+        modifier: activePos?.css || modifier,
         gradient: `${getGradient(
           'radial',
           stops,
-          activePos && activePos.css,
+          activePos?.css || modifier,
           format,
           showAlpha
         )}`
@@ -304,13 +312,7 @@ const GradientPanel: FC<IPropsPanel> = ({
         })
       );
     }
-
-    return () => {
-      removeListeners();
-      removeTouchListeners();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [modifier]);
 
   return (
     <div className='gradient-interaction'>

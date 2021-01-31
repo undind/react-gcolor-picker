@@ -722,7 +722,9 @@
   grid-template-columns: repeat(auto-fill, 30px);
   grid-gap: 6px;
   justify-content: space-between;
-  margin-top: 12px;
+  margin-top: 16px;
+  overflow: auto;
+  max-height: 105px;
 
   .default-color-panel_item {
     height: 30px;
@@ -733,6 +735,8 @@
     border-radius: 4px;
 
     &.default-color-panel_item-active {
+      user-select: none;
+      
       .item_qub {
         position: absolute;
         inset: 35%;

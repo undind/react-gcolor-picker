@@ -8,6 +8,7 @@ export interface IPropsComp {
   debounce?: boolean;
   showAlpha?: boolean;
   colorBoardHeight?: number;
+  defaultColors?: string[];
 }
 
 export interface IPropsMain extends IPropsComp {

@@ -9,4 +9,5 @@ export { default as rgbaToHex } from './rgbaToHex';
 export { default as isValidHex } from './isValidHex';
 export { default as isValidRgba } from './isValidRgba';
 export { default as checkFormat } from './checkFormat';
+export { default as validGradient } from './validGradient';
 export { default as TinyColor } from './color';
