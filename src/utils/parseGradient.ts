@@ -79,7 +79,8 @@ export default (str: string) => {
     }
 
     const findF = LINEAR_POS.find((item) => item.name === angle)?.angle;
-    let modifier = findF || angle;
+    const helperAngle = type === 'linear' ? '180' : 'circle at center';
+    const modifier = findF || angle || helperAngle;
 
     return {
       gradient: str,

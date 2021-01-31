@@ -312,6 +312,7 @@ const GradientPanel: FC<IPropsPanel> = ({
         })
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modifier]);
 
   return (

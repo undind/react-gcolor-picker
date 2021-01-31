@@ -3,11 +3,8 @@ import React, { useState } from 'react';
 import ReactGPicker from 'react-gcolor-picker';
 
 function App() {
-  const [color, setColor] = useState('#fff');
-  const onChange = (value: string) => {
-    console.log(value)
-    setColor(value)
-  };
+  const [color, setColor] = useState('transparent');
+  const onChange = (value: string) => setColor(value);
 
   return (
     <>
@@ -27,7 +24,12 @@ function App() {
       <div
         style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}
       >
-        <ReactGPicker value={color} format='hex' gradient={true} onChange={onChange} />
+        <ReactGPicker
+          value={color}
+          format='rgb'
+          gradient={true}
+          onChange={onChange}
+        />
       </div>
     </>
   );

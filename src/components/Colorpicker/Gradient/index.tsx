@@ -27,6 +27,7 @@ const Gradient: FC<IPropsComp> = ({
   defaultColors
 }) => {
   const { stops } = parseGradient(value);
+
   const lastStop = rgbaToArray(stops[stops.length - 1][0]);
   const lastStopLoc = stops[stops.length - 1][1];
   const activeStop = rgbaToHex([lastStop[0], lastStop[1], lastStop[2]]);

@@ -1,3 +1,4 @@
+/* eslint no-case-declarations: off */
 import React, { FC, useEffect, useState } from 'react';
 
 import {

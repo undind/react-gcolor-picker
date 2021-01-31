@@ -28,13 +28,12 @@ const ColorPickerSolid: FC<IPropsComp> = ({
   const [init, setInit] = useState<boolean>(true);
   const [color, setColor] = useState(getHexAlpha(value));
 
-  useEffect(() => {
-    setColor(getHexAlpha(value));
-  }, [value]);
-
   const debounceColor = useDebounce(color, debounceMS);
   useEffect(() => {
     if (debounce && debounceColor && init === false) {
+      if (value === 'transparent' && color.alpha === 0) {
+        color.alpha = 100;
+      }
       const rgba = hexAlphaToRgba(color);
       onChange(checkFormat(rgba, format, showAlpha, debounceColor.alpha));
     }
