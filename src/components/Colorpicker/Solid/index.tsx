@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 
 import ColorPickerPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
+import DefaultColorsPanel from '../DefaultColorPanel';
 
 import {
   getHexAlpha,
@@ -19,19 +20,20 @@ const ColorPickerSolid: FC<IPropsComp> = ({
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
-  colorBoardHeight = 120
+  colorBoardHeight = 120,
+  defaultColors
 }) => {
   const node = useRef<HTMLDivElement | null>(null);
 
-  const [init, setInit] = useState(true);
+  const [init, setInit] = useState<boolean>(true);
   const [color, setColor] = useState(getHexAlpha(value));
-  useEffect(() => {
-    setColor(getHexAlpha(value));
-  }, [value]);
 
   const debounceColor = useDebounce(color, debounceMS);
   useEffect(() => {
     if (debounce && debounceColor && init === false) {
+      if (value === 'transparent' && color.alpha === 0) {
+        color.alpha = 100;
+      }
       const rgba = hexAlphaToRgba(color);
       onChange(checkFormat(rgba, format, showAlpha, debounceColor.alpha));
     }
@@ -62,6 +64,14 @@ const ColorPickerSolid: FC<IPropsComp> = ({
         showAlpha={showAlpha}
         onChange={setColor}
         onSubmitChange={onChange}
+      />
+      <DefaultColorsPanel
+        defaultColors={defaultColors}
+        setColor={setColor}
+        setInit={setInit}
+        value={value}
+        format={format}
+        showAlpha={showAlpha}
       />
     </div>
   );

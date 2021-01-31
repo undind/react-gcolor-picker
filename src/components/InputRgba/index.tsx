@@ -133,9 +133,4 @@ const InputRgba: FC<TProps> = ({
   );
 };
 
-InputRgba.defaultProps = {
-  hex: '#ffffff',
-  alpha: 100
-};
-
 export default InputRgba;

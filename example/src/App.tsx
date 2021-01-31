@@ -24,7 +24,12 @@ function App() {
       <div
         style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}
       >
-        <ReactGPicker value={color} format='hex' gradient={true} onChange={onChange} />
+        <ReactGPicker
+          value={color}
+          format='rgb'
+          gradient={true}
+          onChange={onChange}
+        />
       </div>
     </>
   );

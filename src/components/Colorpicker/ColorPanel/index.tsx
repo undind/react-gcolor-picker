@@ -112,11 +112,4 @@ const Panel: FC<TPropsMain> = ({
   );
 };
 
-Panel.defaultProps = {
-  className: '',
-  alpha: 100,
-  hex: '#ff0000',
-  onChange: () => ({})
-};
-
 export default Panel;
