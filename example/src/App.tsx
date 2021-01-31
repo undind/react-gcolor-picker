@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ReactGPicker from 'react-gcolor-picker';
 
 function App() {
-  const [color, setColor] = useState('transparent');
+  const [color, setColor] = useState('linear-gradient(90deg, rgb(255,255,255) 0%, rgb(55,22,55) 100%)');
   const onChange = (value: string) => setColor(value);
 
   return (
