@@ -36,19 +36,19 @@ export default App;
 
 ## Props
 
-| Attribute        |    Type    |                   Default                   | Description                                                        |
-| :--------------- | :--------: | :-----------------------------------------: | :----------------------------------------------------------------- |
-| value            |  `string`  |                  `#ffffff`                  | Default color value. Accept: rgba/rgb, hsla/hsl, named colors      |
-| format           |  `string`  |                    `rgb`                    | Return value format. Accept: 'rgb', 'hex', 'hsl'                   |
-| gradient         |   `bool`   |                   `false`                   | Show gradient color panel                                          |
-| solid            |   `bool`   |                   `true`                    | Show solid color panel                                             |
-| debounceMS       |  `number`  |                    `300`                    | Debounce ms value                                                  |
-| debounce         |   `bool`   |                   `true`                    | Debouce off/on                                                     |
-| showAlpha        |   `bool`   |                   `true`                    | Show/hide alpha input and range                                    |
-| popupWidth       |  `number`  |                    `267`                    | Popup width                                                        |
-| colorBoardHeight |  `number`  |                    `120`                    | Board color height                                                 |
-| defaultColors    |  `array`   | [List](#markdown-header-default-color-list) | Default colors array for panel picker                              |
-| onChange         | `function` |                   `null`                    | Default onChange function returns string value in the given format |
+| Attribute        |    Type    |           Default           | Description                                                        |
+| :--------------- | :--------: | :-------------------------: | :----------------------------------------------------------------- |
+| value            |  `string`  |          `#ffffff`          | Default color value. Accept: rgba/rgb, hsla/hsl, named colors      |
+| format           |  `string`  |            `rgb`            | Return value format. Accept: 'rgb', 'hex', 'hsl'                   |
+| gradient         |   `bool`   |           `false`           | Show gradient color panel                                          |
+| solid            |   `bool`   |           `true`            | Show solid color panel                                             |
+| debounceMS       |  `number`  |            `300`            | Debounce ms value                                                  |
+| debounce         |   `bool`   |           `true`            | Debouce off/on                                                     |
+| showAlpha        |   `bool`   |           `true`            | Show/hide alpha input and range                                    |
+| popupWidth       |  `number`  |            `267`            | Popup width                                                        |
+| colorBoardHeight |  `number`  |            `120`            | Board color height                                                 |
+| defaultColors    |  `array`   | [List](#default-color-list) | Default colors array for panel picker                              |
+| onChange         | `function` |           `null`            | Default onChange function returns string value in the given format |
 
 When passing a value for a gradient, you must specify the position of all colors. Otherwise the component will throw an exception.
 For example:
