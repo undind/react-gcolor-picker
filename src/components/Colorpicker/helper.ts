@@ -38,6 +38,10 @@ export const checkValidColorsArray = (
   arr: string[],
   type: 'solid' | 'grad'
 ) => {
+  if (!arr.length || !Array.isArray(arr)) {
+    return [];
+  }
+
   const uniqueArr = [...new Set(arr)];
 
   switch (type) {

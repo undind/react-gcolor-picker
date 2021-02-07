@@ -12,7 +12,7 @@ export default (
 
   switch (format) {
     case 'rgb':
-      value = color;
+      value = tinyColor.toRgbString();
       break;
     case 'hsl':
       value = tinyColor.toHslString();

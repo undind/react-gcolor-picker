@@ -44,8 +44,8 @@ const generateRegExp = () => {
   const rRadial = /circle at\s+((?:(?:left|right|center|top|bottom)(?:\s+(?:left|right|center|top|bottom))?))/;
   const rComma = /\s*,\s*/;
   const rColorHex = /\#(?:[a-f0-9]{6,8}|[a-f0-9]{3})/;
-  const rDigits3 = /\(\s*(?:\d{1,3}\s*,\s*){2}\d{1,3}\s*\)/;
-  const rDigits4 = /\(\s*(?:\d{1,3}\s*,\s*){2}\d{1,3}\s*,\s*\d*\.?\d+\)/;
+  const rDigits3 = /\(\s*(?:\d{1,3}%?\s*,\s*){2}%?\d{1,3}%?\s*\)/;
+  const rDigits4 = /\(\s*(?:\d{1,3}%?\s*,\s*){2}%?\d{1,3}%?\s*,\s*\d*\.?\d+\)/;
   const rValue = /(?:[+-]?\d*\.?\d+)(?:%|[a-z]+)?/;
   const rKeyword = /[_a-z-][_a-z0-9-]*/;
   const rColor = combineRegExp(
