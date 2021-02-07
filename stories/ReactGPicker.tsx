@@ -14,6 +14,7 @@ const ReactGPicker: FC<IPropsMain> = ({
   showAlpha,
   popupWidth,
   colorBoardHeight,
+  defaultColors,
   onChange
 }) => {
   const [color, setColor] = useState(value);
@@ -43,6 +44,7 @@ const ReactGPicker: FC<IPropsMain> = ({
           showAlpha={showAlpha}
           popupWidth={popupWidth}
           colorBoardHeight={colorBoardHeight}
+          defaultColors={defaultColors}
           onChange={(value) => {
             onChangeColor(value);
             onChange(value);

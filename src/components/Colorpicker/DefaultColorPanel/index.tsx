@@ -89,7 +89,7 @@ const DefaultColorPanel: FC<IProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  if (!defaultColors.length) {
+  if (!defaultColors.length || !Array.isArray(defaultColors)) {
     return null;
   }
 
