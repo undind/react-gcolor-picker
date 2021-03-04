@@ -62,7 +62,10 @@ export default (str: string) => {
     let stops: Array<IGradientStop> = [];
     let angle: string = '';
 
-    if (gradient === 'Failed to find gradient') {
+    if (
+      gradient === 'Failed to find gradient' ||
+      gradient === 'Not correct position'
+    ) {
       console.warn('Incorrect gradient value');
       return defaultStops;
     }
