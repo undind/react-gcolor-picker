@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import tinycolor from 'tinycolor2';
 
 import ColorPickerPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
@@ -34,11 +35,21 @@ const ColorPickerSolid: FC<IPropsComp> = ({
       if (value === 'transparent' && color.alpha === 0) {
         color.alpha = 100;
       }
+
       const rgba = hexAlphaToRgba(color);
+      if (tinycolor(rgba).toRgbString() === tinycolor(value).toRgbString()) {
+        return;
+      }
+
       onChange(checkFormat(rgba, format, showAlpha, debounceColor.alpha));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceColor]);
+
+  // Issue https://github.com/undind/react-gcolor-picker/issues/6
+  useEffect(() => {
+    setColor(getHexAlpha(value));
+  }, [value]);
 
   const onCompleteChange = (value: TPropsChange) => {
     setInit(false);

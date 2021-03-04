@@ -13,7 +13,7 @@ const Template: Story<IPropsMain> = (args) => <ReactGPicker {...args} />;
 
 export const Gradient = Template.bind({});
 Gradient.args = {
-  value: 'hsla(0, 50%, 50%, 0.5)',
+  value: 'linear-gradient(315deg, hsl(199, 88%, 87%) 8.00%,hsl(217, 96%, 81%) 92.00%)',
   format: 'hsl',
   solid: false,
   gradient: true,

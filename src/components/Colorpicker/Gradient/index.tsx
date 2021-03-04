@@ -46,12 +46,32 @@ const Gradient: FC<IPropsComp> = ({
 
   useEffect(() => {
     if (debounce && debounceColor && init === false) {
+      if (debounceColor.gradient === parseGradient(value).gradient) {
+        return;
+      }
+
       onChange && onChange(debounceColor.gradient);
     } else if (init === false) {
+      if (debounceColor.gradient === parseGradient(value).gradient) {
+        return;
+      }
+
       onChange && onChange(debounceColor.gradient);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceColor]);
+
+  // Issue https://github.com/undind/react-gcolor-picker/issues/6
+  useEffect(() => {
+    setColor(parseGradient(value));
+    setActiveColor({
+      hex: activeStop,
+      alpha: Number(Math.round(lastStop[3] * 100)),
+      loc: lastStopLoc,
+      index: activeIdx
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const onChangeActiveColor = (value: TPropsChange) => {
     setInit(false);
