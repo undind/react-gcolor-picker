@@ -4,25 +4,33 @@ import React, {
   useEffect,
   MouseEvent,
   TouchEvent,
-  MutableRefObject
+  MutableRefObject,
+  useState
 } from 'react';
+import tinycolor from 'tinycolor2';
 
-import { hexAlphaToRgba, getGradient } from '../../../utils';
+import {
+  hexAlphaToRgba,
+  getGradient,
+  rgbaToArray,
+  rgbaToHex
+} from '../../../utils';
 
-import { IPropsMarkers, TCoords } from './types';
+import { IPropsPanel, TCoords } from './types';
 
-const Markers: FC<IPropsMarkers> = ({
+const Markers: FC<IPropsPanel> = ({
   color,
   setColor,
   activeColor,
   setActiveColor,
   setInit,
-  setActiveIndex,
-  setActiveLoc,
   format = 'rgb',
   showAlpha = true
 }) => {
   const node = useRef() as MutableRefObject<HTMLDivElement>;
+
+  const [needDeleteActive, setNeedDeleteActive] = useState<boolean>(false);
+  const [hideStop, setHideStop] = useState<boolean>(false);
 
   const { stops, type, modifier } = color;
 
@@ -35,10 +43,16 @@ const Markers: FC<IPropsMarkers> = ({
       const rect = target.getBoundingClientRect();
       const clickPos = e.clientX - rect.left;
       const loc = Number(((100 / rect.width) * clickPos).toFixed(0)) / 100;
+
       const newStops = [
         ...color.stops,
         [hexAlphaToRgba(activeColor), loc, color.stops.length]
-      ].sort((a: [string, number], b: [string, number]) => a[1] - b[1]);
+      ]
+        .sort((a: [string, number], b: [string, number]) => a[1] - b[1])
+        .map((item, index) => {
+          item[2] = index;
+          return item;
+        });
 
       setColor({
         ...color,
@@ -49,11 +63,8 @@ const Markers: FC<IPropsMarkers> = ({
       setActiveColor({
         ...activeColor,
         loc: loc,
-        index: color.stops.length
+        index: newStops.find((item) => item[1] === loc)[2]
       });
-
-      setActiveLoc(loc);
-      setActiveIndex(color.stops.length);
     }
   };
 
@@ -67,12 +78,20 @@ const Markers: FC<IPropsMarkers> = ({
     window.removeEventListener('touchend', onTouchEnd);
   };
 
-  const onMouseDown = (e: MouseEvent) => {
+  const onMouseDown = (e: MouseEvent, color: any) => {
     e.preventDefault();
 
     setInit(false);
 
     if (e.button !== 0) return;
+
+    const newColor = tinycolor(color[0]);
+    setActiveColor({
+      hex: '#' + newColor.toHex(),
+      alpha: newColor.getAlpha() * 100,
+      loc: color[1],
+      index: color[2]
+    });
 
     const x = e.clientX;
     const y = e.clientY;
@@ -90,6 +109,15 @@ const Markers: FC<IPropsMarkers> = ({
     const x = e.clientX;
     const y = e.clientY;
 
+    const rect = node?.current?.getBoundingClientRect();
+    const rootDistance = y - rect.y;
+    if (rootDistance > 80 && stops.length > 2) {
+      setHideStop(true);
+      return;
+    } else {
+      setHideStop(false);
+    }
+
     pointMoveTo({
       x,
       y
@@ -100,6 +128,12 @@ const Markers: FC<IPropsMarkers> = ({
     const x = e.clientX;
     const y = e.clientY;
 
+    const rect = node?.current?.getBoundingClientRect();
+    const rootDistance = y - rect.y;
+    if (rootDistance > 80 && stops.length > 2) {
+      setNeedDeleteActive(true);
+    }
+
     pointMoveTo({
       x,
       y
@@ -108,7 +142,7 @@ const Markers: FC<IPropsMarkers> = ({
     removeListeners();
   };
 
-  const onTouchStart = (e: TouchEvent) => {
+  const onTouchStart = (e: TouchEvent, color: any) => {
     setInit(false);
 
     if (e.cancelable) {
@@ -120,6 +154,14 @@ const Markers: FC<IPropsMarkers> = ({
     }
 
     removeTouchListeners();
+
+    const newColor = tinycolor(color[0]);
+    setActiveColor({
+      hex: '#' + newColor.toHex(),
+      alpha: newColor.getAlpha() * 100,
+      loc: color[1],
+      index: color[2]
+    });
 
     const x = e.targetTouches[0].clientX;
     const y = e.targetTouches[0].clientY;
@@ -137,6 +179,15 @@ const Markers: FC<IPropsMarkers> = ({
 
     const x = e.targetTouches[0].clientX;
     const y = e.targetTouches[0].clientY;
+
+    const rect = node?.current?.getBoundingClientRect();
+    const rootDistance = y - rect.y;
+    if (rootDistance > 80 && stops.length > 2) {
+      setHideStop(true);
+      return;
+    } else {
+      setHideStop(false);
+    }
 
     pointMoveTo({
       x,
@@ -156,8 +207,58 @@ const Markers: FC<IPropsMarkers> = ({
     pos = Math.min(pos, width);
 
     const location = Number(((100 / rect.width) * pos).toFixed(0)) / 100;
-    setActiveLoc(location);
+
+    setActiveColor((prev) => ({
+      ...prev,
+      loc: location
+    }));
   };
+
+  useEffect(() => {
+    if (needDeleteActive) {
+      const newStops = stops
+        .filter(
+          (stop: [string, number, number]) => stop[2] !== activeColor.index
+        )
+        .map((stop: [string, number, number], index: number) => {
+          stop[2] = index;
+          return stop;
+        });
+      const lastStop = rgbaToArray(newStops[newStops.length - 1][0]);
+      const lastStopLoc = newStops[newStops.length - 1][1];
+      const activeStop = rgbaToHex([lastStop[0], lastStop[1], lastStop[2]]);
+      const activeIdx = newStops[newStops.length - 1][2];
+
+      setNeedDeleteActive(false);
+      setHideStop(false);
+
+      setActiveColor({
+        hex: activeStop,
+        alpha: Number(Math.round(lastStop[3] * 100)),
+        loc: lastStopLoc,
+        index: activeIdx
+      });
+      return setColor({
+        ...color,
+        gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
+        stops: newStops
+      });
+    }
+
+    const newStops = stops.map((item: [string, number, number]) => {
+      if (activeColor.index === item[2]) {
+        return [item[0], activeColor.loc, item[2]];
+      }
+      return item;
+    });
+
+    setColor({
+      ...color,
+      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
+      stops: newStops
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeColor.loc, needDeleteActive]);
 
   useEffect(() => {
     return () => {
@@ -192,16 +293,12 @@ const Markers: FC<IPropsMarkers> = ({
           return (
             <div
               key={rgba + position + Math.random() * 100}
-              className='gradient-marker'
+              className={`gradient-marker${
+                hideStop && activeColor.index === color[2] ? ' hide' : ''
+              }`}
               style={{ left: position + '%', color: rgba }}
-              onTouchStart={(e) => {
-                setActiveIndex(color[2]);
-                onTouchStart(e);
-              }}
-              onMouseDown={(e) => {
-                setActiveIndex(color[2]);
-                onMouseDown(e);
-              }}
+              onTouchStart={(e) => onTouchStart(e, color)}
+              onMouseDown={(e) => onMouseDown(e, color)}
             />
           );
         })}

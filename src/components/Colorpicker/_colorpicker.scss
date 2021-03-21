@@ -712,6 +712,10 @@
           border-radius: 100%;
           z-index: -1;
         }
+
+        &.hide {
+          opacity: 0;
+        }
       }
     }
   }
@@ -737,7 +741,7 @@
 
     &.default-color-panel_item-active {
       user-select: none;
-      
+
       .item_qub {
         position: absolute;
         inset: 35%;

@@ -94,7 +94,7 @@ export default (str: string) => {
           : modifier,
       stops: stops.map((stop, index: number) => {
         const formatStop = [`${stop.color}`, index];
-        if (stop.position) {
+        if (stop.position || stop.position === 0) {
           formatStop.splice(1, 0, stop.position);
         }
         return formatStop;

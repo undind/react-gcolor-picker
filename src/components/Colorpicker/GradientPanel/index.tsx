@@ -10,7 +10,7 @@ import React, {
 
 import Markers from './Markers';
 
-import { getGradient, rgbaToArray, rgbaToHex } from '../../../utils';
+import { getGradient } from '../../../utils';
 
 import { IPropsPanel, TCoords } from './types';
 
@@ -42,8 +42,6 @@ const GradientPanel: FC<IPropsPanel> = ({
   const { stops, gradient, type, modifier } = color;
 
   const [radialsPosition, setRadialPosition] = useState(RADIALS_POS);
-  const [activeLoc, setActiveLoc] = useState(activeColor.loc);
-  const [activeIndex, setActiveIndex] = useState(activeColor.index);
 
   const onClickMode = () => {
     setInit(false);
@@ -243,37 +241,6 @@ const GradientPanel: FC<IPropsPanel> = ({
   };
 
   useEffect(() => {
-    const newActive = stops.find(
-      (item: [string, number, number]) => item[2] === activeIndex
-    );
-    const rgbaArr = rgbaToArray(newActive && newActive[0]);
-    const hex = rgbaToHex([rgbaArr[0], rgbaArr[1], rgbaArr[2]]);
-
-    setActiveColor({
-      hex,
-      alpha: Number(rgbaArr[3]) * 100,
-      loc: newActive[1],
-      index: activeIndex
-    });
-
-    const newStops = stops
-      .map((item: [string, number, number]) => {
-        if (activeIndex === item[2]) {
-          return [item[0], activeLoc, item[2]];
-        }
-        return item;
-      })
-      .sort((a: [string, number], b: [string, number]) => a[1] - b[1]);
-
-    setColor({
-      ...color,
-      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
-      stops: newStops
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex, activeLoc]);
-
-  useEffect(() => {
     return () => {
       removeListeners();
       removeTouchListeners();
@@ -366,8 +333,6 @@ const GradientPanel: FC<IPropsPanel> = ({
         activeColor={activeColor}
         setActiveColor={setActiveColor}
         setInit={setInit}
-        setActiveIndex={setActiveIndex}
-        setActiveLoc={setActiveLoc}
         format={format}
         showAlpha={showAlpha}
       />
