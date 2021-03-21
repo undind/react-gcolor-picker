@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, ReactText } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { IActiveColor } from '../types';
 
@@ -24,9 +24,4 @@ export interface IPropsPanel {
   setInit: Dispatch<SetStateAction<boolean>>;
   showAlpha?: boolean;
   format?: 'rgb' | 'hsl' | 'hex';
-}
-
-export interface IPropsMarkers extends IPropsPanel {
-  setActiveIndex: Dispatch<SetStateAction<ReactText>>;
-  setActiveLoc: Dispatch<SetStateAction<ReactText>>;
 }

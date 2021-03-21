@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import tinyColor from 'tinycolor2';
 
 import ColorPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
@@ -63,13 +64,25 @@ const Gradient: FC<IPropsComp> = ({
 
   // Issue https://github.com/undind/react-gcolor-picker/issues/6
   useEffect(() => {
-    setColor(parseGradient(value));
-    setActiveColor({
-      hex: activeStop,
-      alpha: Number(Math.round(lastStop[3] * 100)),
-      loc: lastStopLoc,
-      index: activeIdx
-    });
+    const parseValue = parseGradient(value);
+    setColor(parseValue);
+
+    const findActive = parseValue.stops.find(
+      (stop) => stop[2] === activeColor.index
+    );
+
+    // Update active color
+    if (findActive) {
+      const tinycolor = tinyColor(String(findActive[0]));
+      if ('#' + tinycolor.toHex() !== activeColor.hex) {
+        setActiveColor({
+          ...activeColor,
+          hex: '#' + tinycolor.toHex(),
+          alpha: tinycolor.getAlpha() * 100
+        });
+      }
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
@@ -84,7 +97,7 @@ const Gradient: FC<IPropsComp> = ({
     const { stops, type, modifier } = color;
     const rgba = hexAlphaToRgba(value);
     const newStops = stops.map((item: any) => {
-      if (item[2] === activeColor.index) {
+      if (item[1] === activeColor.loc) {
         return [rgba, item[1], item[2]];
       }
       return item;
