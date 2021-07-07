@@ -64,7 +64,7 @@ describe('Test Suites Color Picker', () => {
       target: { value: '90' }
     });
 
-    expect(hexInput.getDOMNode().getAttribute('value')).toEqual('ffffff');
+    expect(hexInput.getDOMNode().getAttribute('value')).toEqual('zxcxz');
     expect(alphaInput.getDOMNode().getAttribute('value')).toEqual('90');
   });
 
