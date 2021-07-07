@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
+import tinycolor from 'tinycolor2';
 import './_input_rgba.scss';
 
-import { hexAlphaToRgba, checkFormat } from '../../utils';
+import { checkFormat } from '../../utils';
 import { getAlphaValue, inputsData, handlePressEnter } from './helpers';
 
 interface IChange {
@@ -48,10 +49,8 @@ const InputRgba: FC<TProps> = ({
   };
 
   const onHandleSubmit = () => {
-    const rgba = hexAlphaToRgba({
-      hex: color.hex[0] === '#' ? color.hex : '#' + color.hex,
-      alpha: Number(color.alpha)
-    });
+    const rgba = tinycolor(color.hex[0] === '#' ? color.hex : '#' + color.hex);
+    rgba.setAlpha(Number(color.alpha) / 100);
 
     if (rgba && (color.alpha !== alpha || color.hex !== hex)) {
       onChange({
@@ -59,7 +58,9 @@ const InputRgba: FC<TProps> = ({
         alpha: Number(color.alpha)
       });
       if (onSubmitChange) {
-        onSubmitChange(checkFormat(rgba, format, showAlpha, color.alpha));
+        onSubmitChange(
+          checkFormat(rgba.toRgbString(), format, showAlpha, color.alpha)
+        );
       }
     } else {
       setColor({

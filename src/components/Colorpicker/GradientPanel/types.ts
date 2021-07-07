@@ -6,7 +6,7 @@ export interface IColor {
   gradient: string;
   type: string;
   modifier: string | number;
-  stops: any;
+  stops: Array<any>;
 }
 
 export type TCoords = {

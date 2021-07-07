@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import tinyColor from 'tinycolor2';
 
 import ColorPanel from '../ColorPanel';
@@ -9,7 +9,6 @@ import DefaultColorsPanel from '../DefaultColorPanel';
 import {
   parseGradient,
   useDebounce,
-  hexAlphaToRgba,
   getGradient,
   rgbaToArray,
   rgbaToHex
@@ -27,7 +26,13 @@ const Gradient: FC<IPropsComp> = ({
   colorBoardHeight = 120,
   defaultColors
 }) => {
-  const { stops } = parseGradient(value);
+  const parsedColors = useCallback(() => {
+    return parseGradient(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const initColor = parsedColors();
+  const { stops } = initColor;
 
   const lastStop = rgbaToArray(stops[stops.length - 1][0]);
   const lastStopLoc = stops[stops.length - 1][1];
@@ -42,18 +47,18 @@ const Gradient: FC<IPropsComp> = ({
     index: activeIdx
   });
 
-  const [color, setColor] = useState(parseGradient(value));
+  const [color, setColor] = useState(initColor);
   const debounceColor = useDebounce(color, debounceMS);
 
   useEffect(() => {
     if (debounce && debounceColor && init === false) {
-      if (debounceColor.gradient === parseGradient(value).gradient) {
+      if (debounceColor.gradient === initColor.gradient) {
         return;
       }
 
       onChange && onChange(debounceColor.gradient);
     } else if (init === false) {
-      if (debounceColor.gradient === parseGradient(value).gradient) {
+      if (debounceColor.gradient === initColor.gradient) {
         return;
       }
 
@@ -64,11 +69,10 @@ const Gradient: FC<IPropsComp> = ({
 
   // Issue https://github.com/undind/react-gcolor-picker/issues/6
   useEffect(() => {
-    const parseValue = parseGradient(value);
-    setColor(parseValue);
+    setColor(initColor);
 
-    const findActive = parseValue.stops.find(
-      (stop) => stop[2] === activeColor.index
+    const findActive = initColor.stops.find(
+      (stop: any) => stop[2] === activeColor.index
     );
 
     // Update active color
@@ -95,10 +99,12 @@ const Gradient: FC<IPropsComp> = ({
     });
 
     const { stops, type, modifier } = color;
-    const rgba = hexAlphaToRgba(value);
+    const rgba = tinyColor(value.hex);
+    rgba.setAlpha(value.alpha / 100);
+
     const newStops = stops.map((item: any) => {
       if (item[1] === activeColor.loc) {
-        return [rgba, item[1], item[2]];
+        return [rgba.toRgbString(), item[1], item[2]];
       }
       return item;
     });
@@ -151,9 +157,6 @@ const Gradient: FC<IPropsComp> = ({
         setColor={setColor}
         setActiveColor={setActiveColor}
         setInit={setInit}
-        value={value}
-        showAlpha={showAlpha}
-        format={format}
         colorType='gradient'
       />
     </div>

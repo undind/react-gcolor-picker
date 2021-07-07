@@ -142,7 +142,9 @@ const parseGradient = (regExpLib: IGradientReg, input: string) => {
       };
 
       if (matchColorStop[2]) {
-        stopResult.position = parseInt(matchColorStop[2], 10) / 100;
+        stopResult.position = Number(
+          (parseInt(matchColorStop[2], 10) / 100).toFixed(2)
+        );
       }
       result.stops.push(stopResult);
 

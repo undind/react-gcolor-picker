@@ -5,12 +5,7 @@ import ColorPickerPanel from '../ColorPanel';
 import InputRgba from '../../InputRgba';
 import DefaultColorsPanel from '../DefaultColorPanel';
 
-import {
-  getHexAlpha,
-  hexAlphaToRgba,
-  useDebounce,
-  checkFormat
-} from '../../../utils';
+import { getHexAlpha, useDebounce, checkFormat } from '../../../utils';
 
 import { IPropsComp, TPropsChange } from '../types';
 
@@ -36,12 +31,15 @@ const ColorPickerSolid: FC<IPropsComp> = ({
         color.alpha = 100;
       }
 
-      const rgba = hexAlphaToRgba(color);
+      const rgba = tinycolor(color.hex);
+      rgba.setAlpha(color.alpha / 100);
       if (tinycolor(rgba).toRgbString() === tinycolor(value).toRgbString()) {
         return;
       }
 
-      onChange(checkFormat(rgba, format, showAlpha, debounceColor.alpha));
+      onChange(
+        checkFormat(rgba.toRgbString(), format, showAlpha, debounceColor.alpha)
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceColor]);
@@ -80,9 +78,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
         defaultColors={defaultColors}
         setColor={setColor}
         setInit={setInit}
-        value={value}
-        format={format}
-        showAlpha={showAlpha}
+        colorType='solid'
       />
     </div>
   );
