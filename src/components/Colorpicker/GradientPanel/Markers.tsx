@@ -9,12 +9,7 @@ import React, {
 } from 'react';
 import tinycolor from 'tinycolor2';
 
-import {
-  hexAlphaToRgba,
-  getGradient,
-  rgbaToArray,
-  rgbaToHex
-} from '../../../utils';
+import { getGradient, rgbaToArray, rgbaToHex } from '../../../utils';
 
 import { IPropsPanel, TCoords } from './types';
 
@@ -43,10 +38,12 @@ const Markers: FC<IPropsPanel> = ({
       const rect = target.getBoundingClientRect();
       const clickPos = e.clientX - rect.left;
       const loc = Number(((100 / rect.width) * clickPos).toFixed(0)) / 100;
+      const rgba = tinycolor(activeColor.hex);
+      rgba.setAlpha(activeColor.alpha / 100);
 
       const newStops = [
         ...color.stops,
-        [hexAlphaToRgba(activeColor), loc, color.stops.length]
+        [rgba.toRgbString(), loc, color.stops.length]
       ]
         .sort((a: [string, number], b: [string, number]) => a[1] - b[1])
         .map((item, index) => {
@@ -80,7 +77,6 @@ const Markers: FC<IPropsPanel> = ({
 
   const onMouseDown = (e: MouseEvent, color: any) => {
     e.preventDefault();
-
     setInit(false);
 
     if (e.button !== 0) return;
@@ -207,7 +203,6 @@ const Markers: FC<IPropsPanel> = ({
     pos = Math.min(pos, width);
 
     const location = Number(((100 / rect.width) * pos).toFixed(0)) / 100;
-
     setActiveColor((prev) => ({
       ...prev,
       loc: location
@@ -296,7 +291,10 @@ const Markers: FC<IPropsPanel> = ({
               className={`gradient-marker${
                 hideStop && activeColor.index === color[2] ? ' hide' : ''
               }`}
-              style={{ left: position + '%', color: rgba }}
+              style={{
+                left: Math.abs(Math.min(position, 100)) + '%',
+                color: rgba
+              }}
               onTouchStart={(e) => onTouchStart(e, color)}
               onMouseDown={(e) => onMouseDown(e, color)}
             />

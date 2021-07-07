@@ -11,7 +11,7 @@ import {
   PopupTabsHeaderLabel,
   PopupTabsBodyItem
 } from '../PopupTab';
-import { getIndexActiveTag, checkValidColorsArray } from './helper';
+import { getIndexActiveTag } from './helper';
 
 import { IPropsMain } from './types';
 
@@ -82,7 +82,7 @@ const ColorPicker: FC<IPropsMain> = ({
               onChange={onChangeSolid}
               value={value}
               format={format}
-              defaultColors={checkValidColorsArray(defaultColors, 'solid')}
+              defaultColors={defaultColors}
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
@@ -94,7 +94,7 @@ const ColorPicker: FC<IPropsMain> = ({
               onChange={onChangeGradient}
               value={value}
               format={format}
-              defaultColors={checkValidColorsArray(defaultColors, 'grad')}
+              defaultColors={defaultColors}
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
@@ -116,7 +116,7 @@ const ColorPicker: FC<IPropsMain> = ({
                 onChange={onChangeSolid}
                 value={value}
                 format={format}
-                defaultColors={checkValidColorsArray(defaultColors, 'solid')}
+                defaultColors={defaultColors}
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}
@@ -130,7 +130,7 @@ const ColorPicker: FC<IPropsMain> = ({
                 onChange={onChangeGradient}
                 value={value}
                 format={format}
-                defaultColors={checkValidColorsArray(defaultColors, 'grad')}
+                defaultColors={defaultColors}
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}

@@ -3,6 +3,7 @@ import React, {
   useState,
   useEffect,
   useRef,
+  memo,
   MutableRefObject,
   MouseEvent,
   TouchEvent
@@ -11,6 +12,7 @@ import React, {
 import Markers from './Markers';
 
 import { getGradient } from '../../../utils';
+import { arraysEqual, shallowEqual } from '../helper';
 
 import { IPropsPanel, TCoords } from './types';
 
@@ -233,6 +235,7 @@ const GradientPanel: FC<IPropsPanel> = ({
 
     const div = [1, 2, 4][Number(coords.shiftKey || coords.ctrlKey)];
     const newAngle = degrees - (degrees % (45 / div));
+
     setColor({
       ...color,
       gradient: `${getGradient(type, stops, newAngle, format, showAlpha)}`,
@@ -340,4 +343,17 @@ const GradientPanel: FC<IPropsPanel> = ({
   );
 };
 
-export default GradientPanel;
+const arePropsEqual = (prevProps: any, nextProps: any) => {
+  if (
+    arraysEqual(prevProps.color.stops, nextProps.color.stops) &&
+    prevProps.color.modifier === nextProps.color.modifier &&
+    prevProps.color.type === nextProps.color.type &&
+    shallowEqual(prevProps.activeColor, nextProps.activeColor)
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+export default memo(GradientPanel, arePropsEqual);
