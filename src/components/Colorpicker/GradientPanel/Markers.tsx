@@ -77,6 +77,8 @@ const Markers: FC<IPropsPanel> = ({
 
   const onMouseDown = (e: MouseEvent, color: any) => {
     e.preventDefault();
+    e.nativeEvent.stopImmediatePropagation();
+
     setInit(false);
 
     if (e.button !== 0) return;
