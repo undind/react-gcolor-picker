@@ -23,6 +23,12 @@ const Gradient: FC<IPropsComp> = ({
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
+  showInputs = true,
+  showGradientResult = true,
+  showGradientStops = true,
+  showGradientMode = true,
+  showGradientAngle = true,
+  showGradientPosition = true,
   colorBoardHeight = 120,
   defaultColors
 }) => {
@@ -90,30 +96,34 @@ const Gradient: FC<IPropsComp> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const onChangeActiveColor = (value: TPropsChange) => {
-    setInit(false);
-    setActiveColor({
-      ...activeColor,
-      hex: value.hex,
-      alpha: Number(Math.round(value.alpha))
-    });
+  const onChangeActiveColor = useCallback(
+    (value: TPropsChange) => {
+      setInit(false);
+      setActiveColor({
+        ...activeColor,
+        hex: value.hex,
+        alpha: Number(Math.round(value.alpha))
+      });
 
-    const { stops, type, modifier } = color;
-    const rgba = tinyColor(value.hex);
-    rgba.setAlpha(value.alpha / 100);
+      const { stops, type, modifier } = color;
+      const rgba = tinyColor(value.hex);
+      rgba.setAlpha(value.alpha / 100);
 
-    const newStops = stops.map((item: any) => {
-      if (item[1] === activeColor.loc) {
-        return [rgba.toRgbString(), item[1], item[2]];
-      }
-      return item;
-    });
-    setColor({
-      ...color,
-      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
-      stops: newStops
-    });
-  };
+      const newStops = stops.map((item: any) => {
+        if (item[1] === activeColor.loc) {
+          return [rgba.toRgbString(), item[1], item[2]];
+        }
+        return item;
+      });
+      setColor({
+        ...color,
+        gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
+        stops: newStops
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeColor]
+  );
 
   const onSubmitChange = (rgba: string) => {
     const rgbaArr = rgbaToArray(rgba);
@@ -130,19 +140,21 @@ const Gradient: FC<IPropsComp> = ({
         onChange={onChangeActiveColor}
         colorBoardHeight={colorBoardHeight}
       />
-      <InputRgba
-        hex={activeColor.hex}
-        alpha={activeColor.alpha}
-        showAlpha={showAlpha}
-        onChange={(value) =>
-          setActiveColor((prev) => ({
-            ...prev,
-            hex: value.hex,
-            alpha: value.alpha
-          }))
-        }
-        onSubmitChange={onSubmitChange}
-      />
+      {showInputs && (
+        <InputRgba
+          hex={activeColor.hex}
+          alpha={activeColor.alpha}
+          showAlpha={showAlpha}
+          onChange={(value) =>
+            setActiveColor((prev) => ({
+              ...prev,
+              hex: value.hex,
+              alpha: value.alpha
+            }))
+          }
+          onSubmitChange={onSubmitChange}
+        />
+      )}
       <GradientPanel
         color={color}
         setColor={setColor}
@@ -151,6 +163,11 @@ const Gradient: FC<IPropsComp> = ({
         setInit={setInit}
         format={format}
         showAlpha={showAlpha}
+        showGradientResult={showGradientResult}
+        showGradientStops={showGradientStops}
+        showGradientMode={showGradientMode}
+        showGradientAngle={showGradientAngle}
+        showGradientPosition={showGradientPosition}
       />
       <DefaultColorsPanel
         defaultColors={defaultColors}

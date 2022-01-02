@@ -3,8 +3,8 @@ import './_popup_tabs.scss';
 
 interface Popups {
   children?: any;
-  activeTab?: number;
-  tabID?: number;
+  activeTab?: string | 'solid' | 'gradient';
+  tabName?: string;
   popupWidth?: number;
   onClick?: () => void;
 }
@@ -30,13 +30,13 @@ export const PopupTabs: FC<Popups> = ({
 export const PopupTabsHeaderLabel: FC<Popups> = ({
   children,
   activeTab,
-  tabID,
+  tabName,
   onClick
 }: Popups) => {
   return (
     <div
       className={`popup_tabs-header-label${
-        activeTab === tabID ? ' popup_tabs-header-label-active' : ''
+        activeTab === tabName ? ' popup_tabs-header-label-active' : ''
       }`}
       onClick={onClick}
     >
@@ -70,9 +70,9 @@ export const PopupTabsBody: FC<Popups> = ({ children, activeTab }) => {
 export const PopupTabsBodyItem: FC<Popups> = ({
   children,
   activeTab,
-  tabID
+  tabName
 }: Popups) => {
-  if (activeTab === tabID) {
+  if (activeTab === tabName) {
     return <div className='popup_tabs-body-item'>{children}</div>;
   }
 

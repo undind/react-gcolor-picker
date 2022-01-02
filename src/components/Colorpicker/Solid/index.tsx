@@ -16,6 +16,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
+  showInputs = true,
   colorBoardHeight = 120,
   defaultColors
 }) => {
@@ -66,14 +67,16 @@ const ColorPickerSolid: FC<IPropsComp> = ({
         showAlpha={showAlpha}
         onChange={onCompleteChange}
       />
-      <InputRgba
-        hex={color.hex}
-        alpha={color.alpha}
-        format={format}
-        showAlpha={showAlpha}
-        onChange={setColor}
-        onSubmitChange={onChange}
-      />
+      {showInputs && (
+        <InputRgba
+          hex={color.hex}
+          alpha={color.alpha}
+          format={format}
+          showAlpha={showAlpha}
+          onChange={setColor}
+          onSubmitChange={onChange}
+        />
+      )}
       <DefaultColorsPanel
         defaultColors={defaultColors}
         setColor={setColor}

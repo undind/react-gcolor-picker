@@ -23,5 +23,10 @@ export interface IPropsPanel {
   setActiveColor: Dispatch<SetStateAction<IActiveColor>>;
   setInit: Dispatch<SetStateAction<boolean>>;
   showAlpha?: boolean;
+  showGradientResult?: boolean;
+  showGradientStops?: boolean;
+  showGradientMode?: boolean;
+  showGradientAngle?: boolean;
+  showGradientPosition?: boolean;
   format?: 'rgb' | 'hsl' | 'hex';
 }

@@ -3,12 +3,12 @@ import tinycolor from 'tinycolor2';
 import { rgbaToArray, isValidRgba, validGradient } from '../../utils';
 
 export const getIndexActiveTag = (value: string) => {
-  let tab = 0;
+  let tab = 'solid';
   const validValue = tinycolor(value).isValid();
 
   if (value) {
     if (value === 'transparent') {
-      tab = 0;
+      tab = 'solid';
       return tab;
     }
     if (
@@ -16,17 +16,17 @@ export const getIndexActiveTag = (value: string) => {
       !value.trim().startsWith('radial-gradient') &&
       !value.trim().startsWith('linear-gradient')
     ) {
-      tab = 0;
+      tab = 'solid';
       return tab;
     }
     const rgba = rgbaToArray(value);
     if (rgba) {
       if (isValidRgba([rgba[0], rgba[1], rgba[2]])) {
-        tab = 0;
+        tab = 'solid';
         return tab;
       }
     } else {
-      tab = 1;
+      tab = 'gradient';
       return tab;
     }
   }
