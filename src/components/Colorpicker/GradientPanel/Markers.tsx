@@ -292,7 +292,7 @@ const Markers: FC<IPropsPanel> = ({
               key={rgba + position + Math.random() * 100}
               className={`gradient-marker${
                 hideStop && activeColor.index === color[2] ? ' hide' : ''
-              }`}
+              }${!hideStop && activeColor.index === color[2] ? ' active' : ''}`}
               style={{
                 left: Math.abs(Math.min(position, 100)) + '%',
                 color: rgba

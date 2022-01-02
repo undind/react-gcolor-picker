@@ -36,19 +36,27 @@ export default App;
 
 ## Props
 
-| Attribute        |    Type    |           Default           | Description                                                        |
-| :--------------- | :--------: | :-------------------------: | :----------------------------------------------------------------- |
-| value            |  `string`  |          `#ffffff`          | Default color value. Accept: rgba/rgb, hsla/hsl, named colors      |
-| format           |  `string`  |            `rgb`            | Return value format. Accept: 'rgb', 'hex', 'hsl'                   |
-| gradient         |   `bool`   |           `false`           | Show gradient color panel                                          |
-| solid            |   `bool`   |           `true`            | Show solid color panel                                             |
-| debounceMS       |  `number`  |            `300`            | Debounce ms value                                                  |
-| debounce         |   `bool`   |           `true`            | Debouce off/on                                                     |
-| showAlpha        |   `bool`   |           `true`            | Show/hide alpha input and range                                    |
-| popupWidth       |  `number`  |            `267`            | Popup width                                                        |
-| colorBoardHeight |  `number`  |            `120`            | Board color height                                                 |
-| defaultColors    |  `array`   | [List](#default-color-list) | Default colors array for panel picker                              |
-| onChange         | `function` |           `null`            | Default onChange function returns string value in the given format |
+| Attribute            |    Type    |           Default           | Description                                                                                           |
+| :------------------- | :--------: | :-------------------------: | :---------------------------------------------------------------------------------------------------- |
+| value                |  `string`  |          `#ffffff`          | Default color value. Accept: rgba/rgb, hsla/hsl, named colors                                         |
+| format               |  `string`  |            `rgb`            | Return value format. Accept: 'rgb', 'hex', 'hsl'                                                      |
+| gradient             |   `bool`   |           `false`           | Show gradient color panel                                                                             |
+| solid                |   `bool`   |           `true`            | Show solid color panel                                                                                |
+| debounceMS           |  `number`  |            `300`            | Debounce ms value                                                                                     |
+| debounce             |   `bool`   |           `true`            | Debouce off/on                                                                                        |
+| showAlpha            |   `bool`   |           `true`            | Show/hide alpha input and range                                                                       |
+| showInputs           |   `bool`   |           `true`            | Show/hide inputs alpha and color                                                                      |
+| showGradientResult   |   `bool`   |           `true`            | Show/hide gradient result fields(angle, mode, position)                                               |
+| showGradientStops    |   `bool`   |           `true`            | Show/hide gradient color stops                                                                        |
+| showGradientMode     |   `bool`   |           `true`            | Show/hide gradient color mode switcher                                                                |
+| showGradientAngle    |   `bool`   |           `true`            | Show/hide gradient angle for linear-gradient                                                          |
+| showGradientPosition |   `bool`   |           `true`            | Show/hide gradient position for radial-gradient                                                       |
+| popupWidth           |  `number`  |            `267`            | Popup width                                                                                           |
+| colorBoardHeight     |  `number`  |            `120`            | Board color height                                                                                    |
+| defaultColors        |  `array`   | [List](#default-color-list) | Default colors array for panel picker                                                                 |
+| defaultActiveTab     |  `string`  |         `undefined`         | Default value for active tab when initializing the component, takes two values: `solid` or `gradient` |
+| onChangeTabs         | `function` |           `null`            | Default onChange function detect when tabs change and return one of the values: `solid` or `gradient` |
+| onChange             | `function` |           `null`            | Default onChange function returns string value in the given format                                    |
 
 When passing a value for a gradient, you must specify the position of all colors. Otherwise the component will throw an exception.
 For example:

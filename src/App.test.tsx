@@ -2,6 +2,8 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import ReactGPicker from './components/Colorpicker';
 
+const onChangeFn = jest.fn();
+const onChangeTabsFn = jest.fn();
 const props = {
   value: '#ffffff',
   gradient: false,
@@ -9,9 +11,17 @@ const props = {
   debounceMS: 300,
   debounce: true,
   showAlpha: true,
+  showInputs: true,
+  showGradientResult: true,
+  showGradientStops: true,
+  showGradientMode: true,
+  showGradientAngle: true,
+  showGradientPosition: true,
   popupWidth: 300,
   colorBoardHeight: 150,
-  onChange: jest.fn()
+  defaultActiveTab: undefined,
+  onChangeTabs: onChangeTabsFn,
+  onChange: onChangeFn
 };
 
 describe('Test Suites Color Picker', () => {
@@ -64,6 +74,7 @@ describe('Test Suites Color Picker', () => {
       target: { value: '90' }
     });
 
+    expect(onChangeFn).toBeCalledWith('rgb(0, 0, 0)');
     expect(hexInput.getDOMNode().getAttribute('value')).toEqual('zxcxz');
     expect(alphaInput.getDOMNode().getAttribute('value')).toEqual('90');
   });
@@ -91,16 +102,20 @@ describe('Test Suites Color Picker', () => {
   });
 
   it('Check Gradient picker tab', () => {
-    const withGradient: any = mount(
-      <ReactGPicker {...props} gradient={true} />
+    const withGradient: ReactWrapper = mount(
+      <ReactGPicker {...props} gradient={true} defaultActiveTab='solid' />
     );
     const headers = withGradient.find('.popup_tabs-header-label');
     headers.at(1).simulate('click');
+    expect(onChangeTabsFn).toBeCalledWith('gradient');
 
     expect(headers.length).toEqual(2);
     expect(headers.at(1).getDOMNode().getAttribute('class')).toEqual(
       'popup_tabs-header-label popup_tabs-header-label-active'
     );
+
+    headers.at(0).simulate('click');
+    expect(onChangeTabsFn).toBeCalledWith('solid');
   });
 
   it('Check default colors panel length', () => {

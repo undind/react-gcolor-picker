@@ -37,7 +37,12 @@ const GradientPanel: FC<IPropsPanel> = ({
   setActiveColor,
   setInit,
   format = 'rgb',
-  showAlpha = true
+  showAlpha = true,
+  showGradientResult = true,
+  showGradientStops = true,
+  showGradientMode = true,
+  showGradientAngle = true,
+  showGradientPosition = true
 }) => {
   const angleNode = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -287,58 +292,70 @@ const GradientPanel: FC<IPropsPanel> = ({
 
   return (
     <div className='gradient-interaction'>
-      <div
-        className='gradient-result'
-        onMouseDown={onMouseDown}
-        onTouchStart={onTouchStart}
-        style={{ background: gradient }}
-      >
+      {showGradientResult && (
         <div
-          data-mode={type}
-          className='gradient-mode'
-          onClick={() => onClickMode()}
-        ></div>
-        <div
-          className='gradient-angle'
-          ref={angleNode}
-          style={{ visibility: type === 'linear' ? 'visible' : 'hidden' }}
+          className='gradient-result'
+          onMouseDown={showGradientAngle ? onMouseDown : undefined}
+          onTouchStart={showGradientAngle ? onTouchStart : undefined}
+          style={{ background: gradient }}
         >
-          <div
-            style={{
-              transform: `rotate(${
-                typeof modifier === 'number' ? modifier - 90 + 'deg' : modifier
-              })`
-            }}
-          ></div>
-        </div>
-        <div
-          className='gradient-pos'
-          style={{
-            opacity: type === 'radial' ? '1' : '0',
-            visibility: type === 'radial' ? 'visible' : 'hidden'
-          }}
-        >
-          {radialsPosition.map((item) => {
-            return (
+          {showGradientMode && (
+            <div
+              data-mode={type}
+              className='gradient-mode'
+              onClick={() => onClickMode()}
+            />
+          )}
+          {showGradientAngle && (
+            <div
+              className='gradient-angle'
+              ref={angleNode}
+              style={{ visibility: type === 'linear' ? 'visible' : 'hidden' }}
+            >
               <div
-                key={item.pos}
-                data-pos={item.pos}
-                className={item.active ? 'gradient-active' : ''}
-                onClick={(e) => setActiveRadialPosition(e)}
-              />
-            );
-          })}
+                style={{
+                  transform: `rotate(${
+                    typeof modifier === 'number'
+                      ? modifier - 90 + 'deg'
+                      : modifier
+                  })`
+                }}
+              ></div>
+            </div>
+          )}
+          {showGradientPosition && (
+            <div
+              className='gradient-pos'
+              style={{
+                opacity: type === 'radial' ? '1' : '0',
+                visibility: type === 'radial' ? 'visible' : 'hidden'
+              }}
+            >
+              {radialsPosition.map((item) => {
+                return (
+                  <div
+                    key={item.pos}
+                    data-pos={item.pos}
+                    className={item.active ? 'gradient-active' : ''}
+                    onClick={(e) => setActiveRadialPosition(e)}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
-      </div>
-      <Markers
-        color={color}
-        setColor={setColor}
-        activeColor={activeColor}
-        setActiveColor={setActiveColor}
-        setInit={setInit}
-        format={format}
-        showAlpha={showAlpha}
-      />
+      )}
+      {showGradientStops && (
+        <Markers
+          color={color}
+          setColor={setColor}
+          activeColor={activeColor}
+          setActiveColor={setActiveColor}
+          setInit={setInit}
+          format={format}
+          showAlpha={showAlpha}
+        />
+      )}
     </div>
   );
 };

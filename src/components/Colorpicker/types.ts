@@ -2,13 +2,21 @@ import { ReactText } from 'react';
 
 export interface IPropsComp {
   value: string;
-  onChange: (value: string) => void;
   format?: 'rgb' | 'hsl' | 'hex';
   debounceMS?: number;
   debounce?: boolean;
   showAlpha?: boolean;
+  showInputs?: boolean;
+  showGradientResult?: boolean;
+  showGradientStops?: boolean;
+  showGradientMode?: boolean;
+  showGradientAngle?: boolean;
+  showGradientPosition?: boolean;
   colorBoardHeight?: number;
   defaultColors?: string[];
+  defaultActiveTab?: string | undefined;
+  onChangeTabs?: (tab: string) => void;
+  onChange: (value: string) => void;
 }
 
 export interface IPropsMain extends IPropsComp {

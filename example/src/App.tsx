@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ReactGPicker from 'react-gcolor-picker';
 
 function App() {
-  const [color, setColor] = useState('linear-gradient(0deg, rgb(255, 177, 153) 0%, rgb(255, 8, 68) 100%)');
+  const [color, setColor] = useState('#fff');
   const onChange = (value: string) => {
     setColor(value);
   };
@@ -24,7 +24,11 @@ function App() {
         {color}
       </div>
       <div>
-        <input type="text" value={color} onChange={e => setColor(e.target.value)} />
+        <input
+          type='text'
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
       </div>
       <div
         style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}

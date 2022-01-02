@@ -15,7 +15,7 @@ import { getIndexActiveTag } from './helper';
 
 import { IPropsMain } from './types';
 
-const defaultColorsConst = [
+const DEFAULT_COLORS = [
   '#FF6900',
   '#FCB900',
   '#7BDCB5',
@@ -50,12 +50,22 @@ const ColorPicker: FC<IPropsMain> = ({
   debounceMS = 300,
   debounce = true,
   showAlpha = true,
+  showInputs = true,
+  showGradientResult = true,
+  showGradientStops = true,
+  showGradientMode = true,
+  showGradientAngle = true,
+  showGradientPosition = true,
   popupWidth = 267,
   colorBoardHeight = 120,
-  defaultColors = defaultColorsConst,
+  defaultColors = DEFAULT_COLORS,
+  defaultActiveTab,
+  onChangeTabs,
   onChange = () => ({})
 }) => {
-  const [activeTab, setActiveTab] = useState(getIndexActiveTag(value));
+  const [activeTab, setActiveTab] = useState<string>(
+    defaultActiveTab || getIndexActiveTag(value)
+  );
 
   const onChangeSolid = (value: string) => {
     onChange(value);
@@ -65,19 +75,32 @@ const ColorPicker: FC<IPropsMain> = ({
     onChange(value);
   };
 
+  const onChangeTab = (tab: string) => {
+    setActiveTab(tab);
+    if (typeof onChangeTabs === 'function' && !!onChangeTabs) {
+      onChangeTabs(tab);
+    }
+  };
+
   if (solid && gradient) {
     return (
       <PopupTabs activeTab={activeTab} popupWidth={popupWidth}>
         <PopupTabsHeader>
-          <PopupTabsHeaderLabel tabID={0} onClick={() => setActiveTab(0)}>
+          <PopupTabsHeaderLabel
+            tabName='solid'
+            onClick={() => onChangeTab('solid')}
+          >
             Solid
           </PopupTabsHeaderLabel>
-          <PopupTabsHeaderLabel tabID={1} onClick={() => setActiveTab(1)}>
+          <PopupTabsHeaderLabel
+            tabName='gradient'
+            onClick={() => onChangeTab('gradient')}
+          >
             Gradient
           </PopupTabsHeaderLabel>
         </PopupTabsHeader>
         <PopupTabsBody>
-          <PopupTabsBodyItem tabID={0}>
+          <PopupTabsBodyItem tabName='solid'>
             <Solid
               onChange={onChangeSolid}
               value={value}
@@ -86,10 +109,11 @@ const ColorPicker: FC<IPropsMain> = ({
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
+              showInputs={showInputs}
               colorBoardHeight={colorBoardHeight}
             />
           </PopupTabsBodyItem>
-          <PopupTabsBodyItem tabID={1}>
+          <PopupTabsBodyItem tabName='gradient'>
             <Gradinet
               onChange={onChangeGradient}
               value={value}
@@ -98,6 +122,12 @@ const ColorPicker: FC<IPropsMain> = ({
               debounceMS={debounceMS}
               debounce={debounce}
               showAlpha={showAlpha}
+              showInputs={showInputs}
+              showGradientResult={showGradientResult}
+              showGradientStops={showGradientStops}
+              showGradientMode={showGradientMode}
+              showGradientAngle={showGradientAngle}
+              showGradientPosition={showGradientPosition}
               colorBoardHeight={colorBoardHeight}
             />
           </PopupTabsBodyItem>
@@ -120,6 +150,7 @@ const ColorPicker: FC<IPropsMain> = ({
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}
+                showInputs={showInputs}
                 colorBoardHeight={colorBoardHeight}
               />
             ) : (
@@ -134,6 +165,12 @@ const ColorPicker: FC<IPropsMain> = ({
                 debounceMS={debounceMS}
                 debounce={debounce}
                 showAlpha={showAlpha}
+                showInputs={showInputs}
+                showGradientResult={showGradientResult}
+                showGradientStops={showGradientStops}
+                showGradientMode={showGradientMode}
+                showGradientAngle={showGradientAngle}
+                showGradientPosition={showGradientPosition}
                 colorBoardHeight={colorBoardHeight}
               />
             ) : (
