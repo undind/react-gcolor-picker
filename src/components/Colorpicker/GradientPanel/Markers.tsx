@@ -77,7 +77,13 @@ const Markers: FC<IPropsPanel> = ({
 
   const onMouseDown = (e: MouseEvent, color: any) => {
     e.preventDefault();
+    e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
+
+    if (e.detail === 2) {
+      console.log(111);
+      return;
+    }
 
     setInit(false);
 
@@ -211,35 +217,37 @@ const Markers: FC<IPropsPanel> = ({
     }));
   };
 
+  const deleteColorStop = () => {
+    const newStops = stops
+      .filter((stop: [string, number, number]) => stop[2] !== activeColor.index)
+      .map((stop: [string, number, number], index: number) => {
+        stop[2] = index;
+        return stop;
+      });
+    const lastStop = rgbaToArray(newStops[newStops.length - 1][0]);
+    const lastStopLoc = newStops[newStops.length - 1][1];
+    const activeStop = rgbaToHex([lastStop[0], lastStop[1], lastStop[2]]);
+    const activeIdx = newStops[newStops.length - 1][2];
+
+    setNeedDeleteActive(false);
+    setHideStop(false);
+
+    setActiveColor({
+      hex: activeStop,
+      alpha: Number(Math.round(lastStop[3] * 100)),
+      loc: lastStopLoc,
+      index: activeIdx
+    });
+    return setColor({
+      ...color,
+      gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
+      stops: newStops
+    });
+  };
+
   useEffect(() => {
     if (needDeleteActive) {
-      const newStops = stops
-        .filter(
-          (stop: [string, number, number]) => stop[2] !== activeColor.index
-        )
-        .map((stop: [string, number, number], index: number) => {
-          stop[2] = index;
-          return stop;
-        });
-      const lastStop = rgbaToArray(newStops[newStops.length - 1][0]);
-      const lastStopLoc = newStops[newStops.length - 1][1];
-      const activeStop = rgbaToHex([lastStop[0], lastStop[1], lastStop[2]]);
-      const activeIdx = newStops[newStops.length - 1][2];
-
-      setNeedDeleteActive(false);
-      setHideStop(false);
-
-      setActiveColor({
-        hex: activeStop,
-        alpha: Number(Math.round(lastStop[3] * 100)),
-        loc: lastStopLoc,
-        index: activeIdx
-      });
-      return setColor({
-        ...color,
-        gradient: `${getGradient(type, newStops, modifier, format, showAlpha)}`,
-        stops: newStops
-      });
+      return deleteColorStop();
     }
 
     const newStops = stops.map((item: [string, number, number]) => {
@@ -299,6 +307,8 @@ const Markers: FC<IPropsPanel> = ({
               }}
               onTouchStart={(e) => onTouchStart(e, color)}
               onMouseDown={(e) => onMouseDown(e, color)}
+              onClick={(e) => e.stopPropagation()}
+              onDoubleClick={deleteColorStop}
             />
           );
         })}
