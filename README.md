@@ -16,6 +16,12 @@
 npm install --save react-gcolor-picker
 ```
 
+OR
+
+```bash
+yarn add react-gcolor-picker
+```
+
 ## Usage
 
 ```tsx
@@ -115,6 +121,12 @@ circle at right bottom
 'linear-gradient(45deg, #2e266f 0.00%, #9664dd38 100.00%)',
 'radial-gradient(circle at center, yellow 0%, #009966 50%, purple 100%)'
 ```
+
+## FAQ
+
+**Q:** There's any possibility to remove extra gradient lines?
+
+**A:** Yes, you only need to drag them outside(bottom) the Gradient component area or double click on the element you want to remove.
 
 ## License
 
