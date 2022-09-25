@@ -81,7 +81,6 @@ const Markers: FC<IPropsPanel> = ({
     e.nativeEvent.stopImmediatePropagation();
 
     if (e.detail === 2) {
-      console.log(111);
       return;
     }
 
