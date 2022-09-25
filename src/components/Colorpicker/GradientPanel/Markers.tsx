@@ -217,6 +217,7 @@ const Markers: FC<IPropsPanel> = ({
   };
 
   const deleteColorStop = () => {
+    if (stops.length <= 2) return;
     const newStops = stops
       .filter((stop: [string, number, number]) => stop[2] !== activeColor.index)
       .map((stop: [string, number, number], index: number) => {
