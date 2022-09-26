@@ -122,7 +122,7 @@ const Gradient: FC<IPropsComp> = ({
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeColor]
+    [activeColor, color]
   );
 
   const onSubmitChange = (rgba: string) => {

@@ -81,7 +81,6 @@ const Markers: FC<IPropsPanel> = ({
     e.nativeEvent.stopImmediatePropagation();
 
     if (e.detail === 2) {
-      console.log(111);
       return;
     }
 
@@ -218,6 +217,7 @@ const Markers: FC<IPropsPanel> = ({
   };
 
   const deleteColorStop = () => {
+    if (stops.length <= 2) return;
     const newStops = stops
       .filter((stop: [string, number, number]) => stop[2] !== activeColor.index)
       .map((stop: [string, number, number], index: number) => {
