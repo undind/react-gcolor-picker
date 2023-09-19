@@ -3,7 +3,6 @@ $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
 
 .colorpicker {
   background-color: $white;
-  min-width: 186px;
   z-index: 1;
 
   & * {
@@ -39,7 +38,6 @@ $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
 
   .color-picker {
     &-panel {
-      min-width: 218px;
       background-color: #fff;
       box-sizing: border-box;
       outline: none;
