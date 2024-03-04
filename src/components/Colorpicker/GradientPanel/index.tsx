@@ -15,20 +15,7 @@ import { getGradient } from '../../../utils';
 import { arraysEqual, shallowEqual } from '../helper';
 
 import { IPropsPanel, TCoords } from './types';
-
-const RADIALS_POS = [
-  { pos: 'tl', css: 'circle at left top', active: false },
-  { pos: 'tm', css: 'circle at center top', active: false },
-  { pos: 'tr', css: 'circle at right top', active: false },
-
-  { pos: 'l', css: 'circle at left', active: false },
-  { pos: 'm', css: 'circle at center', active: true },
-  { pos: 'r', css: 'circle at right', active: false },
-
-  { pos: 'bl', css: 'circle at left bottom', active: false },
-  { pos: 'bm', css: 'circle at center bottom', active: false },
-  { pos: 'br', css: 'circle at right bottom', active: false }
-];
+import { RADIALS_POS } from '../constants';
 
 const GradientPanel: FC<IPropsPanel> = ({
   color,
@@ -42,7 +29,8 @@ const GradientPanel: FC<IPropsPanel> = ({
   showGradientStops = true,
   showGradientMode = true,
   showGradientAngle = true,
-  showGradientPosition = true
+  showGradientPosition = true,
+  allowAddGradientStops = true
 }) => {
   const angleNode = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -354,6 +342,7 @@ const GradientPanel: FC<IPropsPanel> = ({
           setInit={setInit}
           format={format}
           showAlpha={showAlpha}
+          allowAddGradientStops={allowAddGradientStops}
         />
       )}
     </div>

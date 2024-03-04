@@ -29,6 +29,7 @@ const Gradient: FC<IPropsComp> = ({
   showGradientMode = true,
   showGradientAngle = true,
   showGradientPosition = true,
+  allowAddGradientStops = true,
   colorBoardHeight = 120,
   defaultColors
 }) => {
@@ -168,6 +169,7 @@ const Gradient: FC<IPropsComp> = ({
         showGradientMode={showGradientMode}
         showGradientAngle={showGradientAngle}
         showGradientPosition={showGradientPosition}
+        allowAddGradientStops={allowAddGradientStops}
       />
       <DefaultColorsPanel
         defaultColors={defaultColors}

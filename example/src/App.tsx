@@ -38,6 +38,7 @@ function App() {
           format='rgb'
           gradient={true}
           onChange={onChange}
+          allowAddGradientStops={false}
         />
       </div>
     </>
