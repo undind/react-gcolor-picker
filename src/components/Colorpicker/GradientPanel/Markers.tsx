@@ -20,7 +20,8 @@ const Markers: FC<IPropsPanel> = ({
   setActiveColor,
   setInit,
   format = 'rgb',
-  showAlpha = true
+  showAlpha = true,
+  allowAddGradientStops = true
 }) => {
   const node = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -32,6 +33,7 @@ const Markers: FC<IPropsPanel> = ({
   const onAddColorStop = (e: MouseEvent) => {
     setInit(false);
     e.stopPropagation();
+    if (!allowAddGradientStops) return;
     const target = e.target as HTMLElement;
 
     if (target.className !== 'gradient-marker') {

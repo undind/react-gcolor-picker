@@ -28,5 +28,6 @@ export interface IPropsPanel {
   showGradientMode?: boolean;
   showGradientAngle?: boolean;
   showGradientPosition?: boolean;
+  allowAddGradientStops?: boolean;
   format?: 'rgb' | 'hsl' | 'hex';
 }
