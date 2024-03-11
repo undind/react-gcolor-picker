@@ -65,27 +65,81 @@ import ReactGPicker from &#39;react-gcolor-picker&#39;;</code></pre>
 <td align="left">Show/hide alpha input and range</td>
 </tr>
 <tr className="even">
+<td align="left">showInputs</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide inputs alpha and color</td>
+</tr>
+<tr className="odd">
+<td align="left">showGradientResult</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide gradient result fields(angle, mode, position)</td>
+</tr>
+<tr className="even">
+<td align="left">showGradientStops</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide gradient color stops</td>
+</tr>
+<tr className="odd">
+<td align="left">showGradientMode</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide gradient color mode switcher</td>
+</tr>
+<tr className="even">
+<td align="left">showGradientAngle</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide gradient angle for linear-gradient</td>
+</tr>
+<tr className="odd">
+<td align="left">showGradientPosition</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Show/hide gradient position for radial-gradient</td>
+</tr>
+<tr className="even">
+<td align="left">allowAddGradientStops</td>
+<td align="center"><code>bool</code></td>
+<td align="center"><code>true</code></td>
+<td align="left">Allow to add new gradient stops</td>
+</tr>
+<tr className="odd">
 <td align="left">popupWidth</td>
 <td align="center"><code>number</code></td>
 <td align="center"><code>267</code></td>
 <td align="left">Popup width</td>
 </tr>
-<tr className="odd">
+<tr className="even">
 <td align="left">colorBoardHeight</td>
 <td align="center"><code>number</code></td>
 <td align="center"><code>120</code></td>
 <td align="left">Board color height</td>
 </tr>
-<tr className="even">
+<tr className="odd">
 <td align="left">defaultColors</td>
 <td align="center"><code>array</code></td>
 <td align="center"><a href="#default-color-list">List</a></td>
 <td align="left">Default colors array for panel picker</td>
 </tr>
+<tr className="even">
+<td align="left">defaultActiveTab</td>
+<td align="center"><code>string</code></td>
+<td align="center"><code>undefined</code></td>
+<td align="left">Default value for active tab when initializing the component, takes two values: `solid` or `gradient`</td>
+</tr>
 <tr className="odd">
+<td align="left">onChangeTabs</td>
+<td align="center"><code>function</code></td>
+<td align="center"><code>void</code></td>
+<td align="left">Default onChange function detect when tabs change and return one of the values: `solid` or `gradient`</td>
+</tr>
+<tr className="even">
 <td align="left">onChange</td>
 <td align="center"><code>function</code></td>
-<td align="center"><code>null</code></td>
+<td align="center"><code>void</code></td>
 <td align="left">Default onChange function returns string value on rgba format</td>
 </tr>
 </tbody>
@@ -133,6 +187,9 @@ circle at right bottom<br />
 'linear-gradient(45deg, #2e266f 0.00%, #9664dd38 100.00%)',
 'radial-gradient(circle at center, yellow 0%, #009966 50%, purple 100%)'
 </code></pre>
+<h2 id="faq">FAQ</h2>
+<p><strong>Q:</strong> There's any possibility to remove extra gradient lines?</p>
+<p><strong>A:</strong> Yes, you only need to drag them outside(bottom) the Gradient component area or double click on the element you want to remove.</p>
 <h2 id="license">License</h2>
 <p>MIT © <a href="https://github.com/undind">undind</a></p>
 
