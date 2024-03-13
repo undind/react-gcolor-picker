@@ -822,7 +822,7 @@ $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
   grid-gap: 6px;
   justify-content: space-between;
   margin: 14px -16px 0px -16px;
-  padding: 2px 16px 0px 16px;
+  padding: 2px 16px 1px 16px;
   overflow: auto;
   max-height: 105px;
 
@@ -833,6 +833,7 @@ $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
     position: relative;
     outline: none;
     border-radius: 4px;
+    box-shadow: 0px 0px 0px 1px #bbbfc5;
 
     &.default-color-panel_item-active {
       user-select: none;
