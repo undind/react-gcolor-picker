@@ -15,7 +15,8 @@ const ReactGPicker: FC<IPropsMain> = ({
   popupWidth,
   colorBoardHeight,
   defaultColors,
-  onChange
+  onChange,
+  labels
 }) => {
   const [color, setColor] = useState(value);
   const onChangeColor = (value: string) => setColor(value);
@@ -26,11 +27,7 @@ const ReactGPicker: FC<IPropsMain> = ({
 
   return (
     <div className='wrapper' style={{ background: color }}>
-      <span
-        role='textbox'
-        aria-multiline='true'
-        className='color-text'
-      >
+      <span role='textbox' aria-multiline='true' className='color-text'>
         {color}
       </span>
       <div className='centered'>
@@ -49,6 +46,7 @@ const ReactGPicker: FC<IPropsMain> = ({
             onChangeColor(value);
             onChange(value);
           }}
+          labels={labels}
         />
       </div>
     </div>

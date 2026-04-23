@@ -123,4 +123,31 @@ describe('Test Suites Color Picker', () => {
 
     expect(defaulPanel.length).toBe(12);
   });
+
+  it('Check labels props', () => {
+    const labels = {
+      solid: 'Uni',
+      gradient: 'Dégradé',
+      hex: 'Hex',
+      alpha: 'Opacité'
+    };
+    const withLabels = mount(
+      <ReactGPicker
+        {...props}
+        labels={labels}
+        gradient={true}
+        showAlpha={true}
+        showInputs={true}
+      />
+    );
+    const solidLabel = withLabels.find('.popup_tabs-header-label').at(0);
+    const gradientLabel = withLabels.find('.popup_tabs-header-label').at(1);
+    const hexLabel = withLabels.find('.input_rgba-hex .input_rgba-label');
+    const alphaLabel = withLabels.find('.input_rgba-alpha .input_rgba-label');
+
+    expect(solidLabel.text()).toBe(labels.solid);
+    expect(gradientLabel.text()).toBe(labels.gradient);
+    expect(hexLabel.text()).toBe(labels.hex);
+    expect(alphaLabel.text()).toBe(labels.alpha);
+  });
 });

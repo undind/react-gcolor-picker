@@ -31,7 +31,8 @@ const Gradient: FC<IPropsComp> = ({
   showGradientPosition = true,
   allowAddGradientStops = true,
   colorBoardHeight = 120,
-  defaultColors
+  defaultColors,
+  labels = {}
 }) => {
   const parsedColors = useCallback(() => {
     return parseGradient(value);
@@ -154,6 +155,7 @@ const Gradient: FC<IPropsComp> = ({
             }))
           }
           onSubmitChange={onSubmitChange}
+          labels={labels}
         />
       )}
       <GradientPanel
