@@ -1,4 +1,5 @@
 import { ReactText } from 'react';
+import { IColor } from './GradientPanel/types';
 
 export interface ILabels {
   solid?: string;
@@ -25,6 +26,7 @@ export interface IPropsComp {
   defaultActiveTab?: string | undefined;
   onChangeTabs?: (tab: string) => void;
   onChange: (value: string) => void;
+  onDefaultColorSelect?: (color: string | IColor) => void;
   labels?: ILabels;
 }
 

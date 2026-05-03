@@ -17,6 +17,7 @@ interface IProps {
   setColor: (color: any) => void;
   setInit: (init: boolean) => void;
   setActiveColor?: (color: IActiveColor) => void;
+  onDefaultColorSelect?: (color: string | IColor) => void;
   colorType: 'solid' | 'gradient';
 }
 
@@ -24,6 +25,7 @@ const DefaultColorPanel: FC<IProps> = ({
   defaultColors = [],
   setColor,
   setActiveColor,
+  onDefaultColorSelect,
   setInit,
   colorType
 }) => {
@@ -59,6 +61,7 @@ const DefaultColorPanel: FC<IProps> = ({
 
       setInit(false);
 
+      onDefaultColorSelect?.(item?.gradient);
       setColor(item);
       setActiveColor &&
         setActiveColor({
@@ -70,6 +73,7 @@ const DefaultColorPanel: FC<IProps> = ({
       setActive(index);
     } else if (colorType !== 'gradient' && typeof item === 'string') {
       setInit(false);
+      onDefaultColorSelect?.(item);
       setColor(getHexAlpha(item));
       setActive(index);
     }

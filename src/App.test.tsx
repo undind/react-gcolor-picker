@@ -1,9 +1,11 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import ReactGPicker from './components/Colorpicker';
+import { DEFAULT_COLORS } from './components/Colorpicker/constants';
 
 const onChangeFn = jest.fn();
 const onChangeTabsFn = jest.fn();
+const onDefaultColorSelectFn = jest.fn();
 const props = {
   value: '#ffffff',
   gradient: false,
@@ -20,6 +22,7 @@ const props = {
   popupWidth: 300,
   colorBoardHeight: 150,
   defaultActiveTab: undefined,
+  onDefaultColorSelect: onDefaultColorSelectFn,
   onChangeTabs: onChangeTabsFn,
   onChange: onChangeFn
 };
@@ -42,7 +45,7 @@ describe('Test Suites Color Picker', () => {
     expect(wrapper.props()).toEqual(props);
   });
 
-  it('Check inputs deafult values', () => {
+  it('Check inputs default values', () => {
     const hexInput = wrapper.find('.input_rgba-hex input');
     const alphaInput = wrapper.find('.input_rgba-alpha input');
 
@@ -118,9 +121,12 @@ describe('Test Suites Color Picker', () => {
     expect(onChangeTabsFn).toBeCalledWith('solid');
   });
 
-  it('Check default colors panel length', () => {
+  it('Check default colors panel length and click event', () => {
     const defaulPanel = wrapper.find('.default-color-panel_item');
 
+    defaulPanel.at(0).simulate('click');
+
+    expect(onDefaultColorSelectFn).toBeCalledWith(DEFAULT_COLORS[0]);
     expect(defaulPanel.length).toBe(12);
   });
 

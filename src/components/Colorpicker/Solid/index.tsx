@@ -12,6 +12,7 @@ import { IPropsComp, TPropsChange } from '../types';
 const ColorPickerSolid: FC<IPropsComp> = ({
   value = '#ffffff',
   onChange = () => ({}),
+  onDefaultColorSelect = () => ({}),
   format = 'rgb',
   debounceMS = 300,
   debounce = true,
@@ -83,6 +84,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
         defaultColors={defaultColors}
         setColor={setColor}
         setInit={setInit}
+        onDefaultColorSelect={onDefaultColorSelect}
         colorType='solid'
       />
     </div>

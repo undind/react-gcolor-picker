@@ -37,6 +37,7 @@ function App() {
           value={color}
           format='rgb'
           gradient={true}
+          solid={true}
           onChange={onChange}
           allowAddGradientStops={false}
         />
