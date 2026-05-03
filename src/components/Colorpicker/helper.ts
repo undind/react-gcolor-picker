@@ -2,8 +2,12 @@ import tinycolor from 'tinycolor2';
 
 import { rgbaToArray, isValidRgba, validGradient } from '../../utils';
 
-export const getIndexActiveTag = (value: string) => {
-  let tab = 'solid';
+export const getIndexActiveTag = (
+  value: string,
+  solid: boolean,
+  gradient: boolean
+) => {
+  let tab = solid ? 'solid' : gradient ? 'gradient' : 'solid';
   const validValue = tinycolor(value).isValid();
 
   if (value) {

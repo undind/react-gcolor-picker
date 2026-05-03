@@ -1,5 +1,5 @@
 import './_colorpicker.scss';
-import React, { Fragment, useState, FC } from 'react';
+import React, { useState, FC, useMemo, Fragment } from 'react';
 
 import Gradinet from './Gradient';
 import Solid from './Solid';
@@ -38,10 +38,11 @@ const ColorPicker: FC<IPropsMain> = ({
   defaultActiveTab,
   onChangeTabs,
   onChange = () => ({}),
+  onDefaultColorSelect = () => ({}),
   labels = {}
 }) => {
   const [activeTab, setActiveTab] = useState<string>(
-    defaultActiveTab || getIndexActiveTag(value)
+    defaultActiveTab ?? getIndexActiveTag(value, solid, gradient)
   );
 
   const onChangeSolid = (value: string) => {
@@ -59,110 +60,89 @@ const ColorPicker: FC<IPropsMain> = ({
     }
   };
 
-  if (solid && gradient) {
-    return (
-      <PopupTabs activeTab={activeTab} popupWidth={popupWidth}>
-        <PopupTabsHeader>
-          <PopupTabsHeaderLabel
-            tabName='solid'
-            onClick={() => onChangeTab('solid')}
-          >
-            {labels.solid ?? 'Solid'}
-          </PopupTabsHeaderLabel>
-          <PopupTabsHeaderLabel
-            tabName='gradient'
-            onClick={() => onChangeTab('gradient')}
-          >
-            {labels.gradient ?? 'Gradient'}
-          </PopupTabsHeaderLabel>
-        </PopupTabsHeader>
-        <PopupTabsBody>
-          <PopupTabsBodyItem tabName='solid'>
-            <Solid
-              onChange={onChangeSolid}
-              value={value}
-              format={format}
-              defaultColors={defaultColors}
-              debounceMS={debounceMS}
-              debounce={debounce}
-              showAlpha={showAlpha}
-              showInputs={showInputs}
-              colorBoardHeight={colorBoardHeight}
-              labels={labels}
-            />
-          </PopupTabsBodyItem>
-          <PopupTabsBodyItem tabName='gradient'>
-            <Gradinet
-              onChange={onChangeGradient}
-              value={value}
-              format={format}
-              defaultColors={defaultColors}
-              debounceMS={debounceMS}
-              debounce={debounce}
-              showAlpha={showAlpha}
-              showInputs={showInputs}
-              showGradientResult={showGradientResult}
-              showGradientStops={showGradientStops}
-              showGradientMode={showGradientMode}
-              showGradientAngle={showGradientAngle}
-              showGradientPosition={showGradientPosition}
-              allowAddGradientStops={allowAddGradientStops}
-              colorBoardHeight={colorBoardHeight}
-              labels={labels}
-            />
-          </PopupTabsBodyItem>
-        </PopupTabsBody>
-      </PopupTabs>
-    );
-  }
+  const tabs: { name: string; label: string }[] = useMemo(() => {
+    return [
+      solid && {
+        name: 'solid',
+        label: labels.solid ?? 'Solid'
+      },
+      gradient && {
+        name: 'gradient',
+        label: labels.gradient ?? 'Gradient'
+      }
+    ].filter(Boolean) as { name: string; label: string }[];
+  }, [solid, gradient, labels]);
 
   return (
-    <>
-      {solid || gradient ? (
-        <PopupTabs popupWidth={popupWidth}>
-          <PopupTabsBody>
-            {solid ? (
-              <Solid
-                onChange={onChangeSolid}
-                value={value}
-                format={format}
-                defaultColors={defaultColors}
-                debounceMS={debounceMS}
-                debounce={debounce}
-                showAlpha={showAlpha}
-                showInputs={showInputs}
-                colorBoardHeight={colorBoardHeight}
-                labels={labels}
-              />
-            ) : (
-              <Fragment />
-            )}
-            {gradient ? (
-              <Gradinet
-                onChange={onChangeGradient}
-                value={value}
-                format={format}
-                defaultColors={defaultColors}
-                debounceMS={debounceMS}
-                debounce={debounce}
-                showAlpha={showAlpha}
-                showInputs={showInputs}
-                showGradientResult={showGradientResult}
-                showGradientStops={showGradientStops}
-                showGradientMode={showGradientMode}
-                showGradientAngle={showGradientAngle}
-                showGradientPosition={showGradientPosition}
-                allowAddGradientStops={allowAddGradientStops}
-                colorBoardHeight={colorBoardHeight}
-                labels={labels}
-              />
-            ) : (
-              <Fragment />
-            )}
-          </PopupTabsBody>
-        </PopupTabs>
-      ) : null}
-    </>
+    <PopupTabs activeTab={activeTab} popupWidth={popupWidth}>
+      {tabs?.length > 1 ? (
+        <PopupTabsHeader>
+          {tabs?.map((tab) => (
+            <PopupTabsHeaderLabel
+              key={tab.name}
+              tabName={tab.name}
+              onClick={() => onChangeTab(tab.name)}
+            >
+              {tab.label}
+            </PopupTabsHeaderLabel>
+          ))}
+        </PopupTabsHeader>
+      ) : (
+        <Fragment />
+      )}
+      <PopupTabsBody>
+        {tabs?.map((tab) => {
+          switch (tab.name) {
+            case 'solid':
+              return (
+                <PopupTabsBodyItem key={tab.name} tabName='solid'>
+                  <Solid
+                    onChange={onChangeSolid}
+                    onDefaultColorSelect={onDefaultColorSelect}
+                    value={value}
+                    format={format}
+                    defaultColors={defaultColors}
+                    debounceMS={debounceMS}
+                    debounce={debounce}
+                    showAlpha={showAlpha}
+                    showInputs={showInputs}
+                    colorBoardHeight={colorBoardHeight}
+                    labels={labels}
+                  />
+                </PopupTabsBodyItem>
+              );
+
+            case 'gradient':
+              return (
+                <PopupTabsBodyItem key={tab.name} tabName='gradient'>
+                  <Gradinet
+                    onChange={onChangeGradient}
+                    onDefaultColorSelect={onDefaultColorSelect}
+                    value={value}
+                    format={format}
+                    defaultColors={defaultColors}
+                    debounceMS={debounceMS}
+                    debounce={debounce}
+                    showAlpha={showAlpha}
+                    showInputs={showInputs}
+                    showGradientResult={showGradientResult}
+                    showGradientStops={showGradientStops}
+                    showGradientMode={showGradientMode}
+                    showGradientAngle={showGradientAngle}
+                    showGradientPosition={showGradientPosition}
+                    allowAddGradientStops={allowAddGradientStops}
+                    colorBoardHeight={colorBoardHeight}
+                    labels={labels}
+                  />
+                </PopupTabsBodyItem>
+              );
+
+            default:
+              return <Fragment />;
+          }
+        })}
+      </PopupTabsBody>
+    </PopupTabs>
   );
 };
 

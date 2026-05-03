@@ -19,6 +19,7 @@ import { IPropsComp, TPropsChange, IActiveColor } from '../types';
 const Gradient: FC<IPropsComp> = ({
   value = '#ffffff',
   onChange = () => ({}),
+  onDefaultColorSelect = () => ({}),
   format = 'rgb',
   debounceMS = 300,
   debounce = true,
@@ -178,6 +179,7 @@ const Gradient: FC<IPropsComp> = ({
         setColor={setColor}
         setActiveColor={setActiveColor}
         setInit={setInit}
+        onDefaultColorSelect={onDefaultColorSelect}
         colorType='gradient'
       />
     </div>
