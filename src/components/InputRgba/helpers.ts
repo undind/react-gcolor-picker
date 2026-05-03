@@ -1,4 +1,5 @@
 import { KeyboardEvent, ChangeEvent } from 'react';
+import { ILabels } from '../Colorpicker/types';
 
 interface IInput {
   alphaValue: number;
@@ -6,6 +7,7 @@ interface IInput {
   showAlpha?: boolean;
   onChangeAlpha: (value: string) => void;
   onChangeHex: (value: string) => void;
+  labels?: ILabels;
 }
 
 export const getAlphaValue = (value: string) => {
@@ -41,7 +43,7 @@ export const inputsData = (props: IInput) => {
     labelSymbol: true,
     idInput: `rgba-hex${Math.random() * 10000}`,
     valueInput: props.hexValue,
-    labelText: 'Hex',
+    labelText: props.labels?.hex ?? 'Hex',
     labelArea: 'hex',
     labelClass: 'input_rgba-label',
     onChangeInput: (e: ChangeEvent<HTMLInputElement>) =>
@@ -54,7 +56,7 @@ export const inputsData = (props: IInput) => {
     labelSymbol: false,
     idInput: `rgba-alpha${Math.random() * 10000}`,
     valueInput: props.alphaValue,
-    labelText: 'Alpha',
+    labelText: props.labels?.alpha ?? 'Alpha',
     labelArea: 'alpha',
     labelClass: 'input_rgba-label',
     onChangeInput: (e: ChangeEvent<HTMLInputElement>) =>

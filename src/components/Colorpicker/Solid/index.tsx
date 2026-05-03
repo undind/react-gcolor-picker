@@ -18,7 +18,8 @@ const ColorPickerSolid: FC<IPropsComp> = ({
   showAlpha = true,
   showInputs = true,
   colorBoardHeight = 120,
-  defaultColors
+  defaultColors,
+  labels = {}
 }) => {
   const node = useRef<HTMLDivElement | null>(null);
 
@@ -75,6 +76,7 @@ const ColorPickerSolid: FC<IPropsComp> = ({
           showAlpha={showAlpha}
           onChange={setColor}
           onSubmitChange={onChange}
+          labels={labels}
         />
       )}
       <DefaultColorsPanel

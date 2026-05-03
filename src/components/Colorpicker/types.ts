@@ -1,5 +1,12 @@
 import { ReactText } from 'react';
 
+export interface ILabels {
+  solid?: string;
+  gradient?: string;
+  hex?: string;
+  alpha?: string;
+}
+
 export interface IPropsComp {
   value: string;
   format?: 'rgb' | 'hsl' | 'hex';
@@ -18,6 +25,7 @@ export interface IPropsComp {
   defaultActiveTab?: string | undefined;
   onChangeTabs?: (tab: string) => void;
   onChange: (value: string) => void;
+  labels?: ILabels;
 }
 
 export interface IPropsMain extends IPropsComp {

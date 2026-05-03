@@ -3,6 +3,7 @@ import tinycolor from 'tinycolor2';
 import './_input_rgba.scss';
 
 import { checkFormat } from '../../utils';
+import { ILabels } from '../Colorpicker/types';
 import { getAlphaValue, inputsData, handlePressEnter } from './helpers';
 
 interface IChange {
@@ -17,6 +18,7 @@ type TProps = {
   showAlpha?: boolean;
   onChange: ({ hex, alpha }: IChange) => void;
   onSubmitChange?: (rgba: string) => void;
+  labels?: ILabels;
 };
 
 const InputRgba: FC<TProps> = ({
@@ -25,7 +27,8 @@ const InputRgba: FC<TProps> = ({
   format = 'rgb',
   showAlpha = true,
   onChange,
-  onSubmitChange
+  onSubmitChange,
+  labels = {}
 }) => {
   const [color, setColor] = useState({
     alpha,
@@ -86,7 +89,8 @@ const InputRgba: FC<TProps> = ({
     hexValue: color.hex.replace(/#/i, ''),
     onChangeAlpha,
     onChangeHex,
-    showAlpha
+    showAlpha,
+    labels
   };
 
   return (
